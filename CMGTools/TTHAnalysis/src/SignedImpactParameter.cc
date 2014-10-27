@@ -32,3 +32,16 @@ SignedImpactParameter::twoTrackChi2(const reco::Track &tk1, const reco::Track &t
     TransientVertex myVertex = vtxFitter.vertex(ttks);
     return std::make_pair(myVertex.totalChiSquared(),myVertex.degreesOfFreedom());  
 }
+
+std::pair<double,double>
+SignedImpactParameter::fourTrackChi2(const reco::Track &tk1, const reco::Track &tk2, const reco::Track &tk3, const reco::Track &tk4) const {
+    if (paramField_ == 0) paramField_ = new OAEParametrizedMagneticField("3_8T");
+    std::vector<reco::TransientTrack> ttks;
+    ttks.push_back(reco::TransientTrack(tk1,paramField_));
+    ttks.push_back(reco::TransientTrack(tk2,paramField_));
+    ttks.push_back(reco::TransientTrack(tk3,paramField_));
+    ttks.push_back(reco::TransientTrack(tk4,paramField_));
+    KalmanVertexFitter vtxFitter;
+    TransientVertex myVertex = vtxFitter.vertex(ttks);
+    return std::make_pair(myVertex.totalChiSquared(),myVertex.degreesOfFreedom());  
+}

@@ -13,8 +13,9 @@ class SignedImpactParameter {
 
         Measurement1D signedIP3D(const reco::Track &tk, const reco::Vertex &vtx, const reco::Track::Vector jetdir) const ;
         std::pair<double,double> twoTrackChi2(const reco::Track &tk1, const reco::Track &tk2) const ;
+        std::pair<double,double> fourTrackChi2(const reco::Track &tk1, const reco::Track &tk2, const reco::Track &tk3, const reco::Track &tk4) const ;
     private:
-        //MagneticField *bfield_;
+        //MagneticField *
         static MagneticField *paramField_;
 };
 

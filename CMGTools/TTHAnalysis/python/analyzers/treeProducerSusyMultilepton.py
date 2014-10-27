@@ -31,6 +31,10 @@ class treeProducerSusyMultilepton( treeProducerSusyCore ):
             NTupleVariable("minMllAFAS", lambda ev: ev.minMllAFAS, help="min m(ll), AF/AS"),
             NTupleVariable("maxMllAFAS", lambda ev: ev.maxMllAFAS, help="max m(ll), AF/AS"),
             NTupleVariable("m2l", lambda ev: ev.m2l, help="m(ll)"),
+            NTupleVariable("vtx2l_chi2", lambda ev: ev.vtx2l[0], help="chi2 of 2l vtx"),
+            NTupleVariable("vtx2l_ndf", lambda ev: ev.vtx2l[1], help="ndf of 2l vtx"),
+            NTupleVariable("vtx4l_chi2", lambda ev: ev.vtx4l[0], help="chi2 of 4l vtx"),
+            NTupleVariable("vtx4l_ndf", lambda ev: ev.vtx4l[1], help="ndf of 4l vtx"),
             ##--------------------------------------------------           
             NTupleVariable("mZ2", lambda ev : ev.bestZ2[3], help="m(ll) of second SF/OS pair, for ZZ reco."),
             NTupleVariable("m3l", lambda ev: ev.m3l, help="m(3l)"),

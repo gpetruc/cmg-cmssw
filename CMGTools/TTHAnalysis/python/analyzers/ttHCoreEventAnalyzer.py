@@ -17,7 +17,7 @@ from CMGTools.RootTools.physicsobjects.Jet import Jet
 
 from CMGTools.RootTools.utils.DeltaR import * 
 from CMGTools.TTHAnalysis.leptonMVA import LeptonMVA
-from CMGTools.TTHAnalysis.signedSip import twoTrackChi2
+from CMGTools.TTHAnalysis.signedSip import twoTrackChi2, fourTrackChi2
 import os
         
 class ttHCoreEventAnalyzer( Analyzer ):
@@ -104,6 +104,7 @@ class ttHCoreEventAnalyzer( Analyzer ):
         event.pt4l = (leps[0].p4() + leps[1].p4() + leps[2].p4() + leps[3].p4()).Pt() if nlep >= 4 else 0
         event.m4l = (leps[0].p4() + leps[1].p4() + leps[2].p4() + leps[3].p4()).M() if nlep >= 4 else 0
         event.vtx2l = twoTrackChi2(leps[0],leps[1]) if nlep >= 2 else (-1,-1)
+        event.vtx4l = fourTrackChi2(leps[0],leps[1],leps[2],leps[3]) if nlep >= 4 else (-1,-1)
 
     def mllValues(self, event, pairSelection, maxLeps):
         return self.llValues(event, lambda l1,l2: (l1.p4() + l2.p4()).M(), pairSelection, maxLeps)
