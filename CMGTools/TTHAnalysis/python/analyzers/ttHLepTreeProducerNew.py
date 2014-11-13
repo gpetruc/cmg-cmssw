@@ -28,6 +28,7 @@ class ttHLepTreeProducerNew( TreeAnalyzerNumpy ):
         super(ttHLepTreeProducerNew, self).declareHandles()
         if hasattr(self.cfg_ana, 'triggerBits'):
             self.handles['TriggerResults'] = AutoHandle( ('TriggerResults','','HLT'), 'edm::TriggerResults' )
+        self.mchandles['GenInfo'] = AutoHandle( ('generator','',''), 'GenEventInfoProduct' )
         for k,v in self.collections.iteritems():
             if type(v) == tuple and isinstance(v[0], AutoHandle):
                 self.handles[k] = v[0]
@@ -52,6 +53,8 @@ class ttHLepTreeProducerNew( TreeAnalyzerNumpy ):
         if isMC:
             ## PU weights
             tr.var("puWeight")
+            ## number of true interactions
+            tr.var("genWeight")
             ## PDF weights
             self.pdfWeights = []
             if hasattr(self.cfg_ana, "PDFWeights") and len(self.cfg_ana.PDFWeights) > 0:
@@ -94,6 +97,7 @@ class ttHLepTreeProducerNew( TreeAnalyzerNumpy ):
         if isMC:
             ## PU weights
             tr.fill("puWeight", event.eventWeight)
+            tr.fill("genWeight", self.mchandles['GenInfo'].product().weight())
             ## PDF weights
             for (pdf,nvals) in self.pdfWeights:
                 if len(event.pdfWeights[pdf]) != nvals:

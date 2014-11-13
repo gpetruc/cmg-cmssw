@@ -19,6 +19,8 @@ class skimAnalyzerCount( Analyzer ):
     def declareHandles(self):
         super(skimAnalyzerCount, self).declareHandles()
         self.counterHandle = Handle("edm::MergeableCounter")
+        if not self.useLumiBlocks:
+            self.mchandles['GenInfo'] = AutoHandle( ('generator','',''), 'GenEventInfoProduct' )
         
     def beginLoop(self):
         super(skimAnalyzerCount,self).beginLoop()
@@ -26,6 +28,8 @@ class skimAnalyzerCount( Analyzer ):
         self.counters.addCounter('SkimReport')
         self.count = self.counters.counter('SkimReport')
         self.count.register('All Events')
+        if not self.useLumiBlocks:
+            self.count.register('Sum Weights')
 
         if not self.useLumiBlocks:
             print 'Will actually count events instead of accessing lumi blocks'
@@ -54,4 +58,7 @@ class skimAnalyzerCount( Analyzer ):
     def process(self, iEvent, event):
         if not self.useLumiBlocks:
             self.count.inc('All Events')
+            if not self.useLumiBlocks:
+                self.readCollections( iEvent )
+                self.count.inc('Sum Weights', self.mchandles['GenInfo'].product().weight())
         return True
