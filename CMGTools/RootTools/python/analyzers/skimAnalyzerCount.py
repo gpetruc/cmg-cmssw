@@ -29,7 +29,8 @@ class skimAnalyzerCount( Analyzer ):
         self.count = self.counters.counter('SkimReport')
         self.count.register('All Events')
         if not self.useLumiBlocks:
-            self.count.register('Sum Weights')
+            if self.cfg_comp.isMC:
+                self.count.register('Sum Weights')
 
         if not self.useLumiBlocks:
             print 'Will actually count events instead of accessing lumi blocks'
@@ -60,5 +61,6 @@ class skimAnalyzerCount( Analyzer ):
             self.count.inc('All Events')
             if not self.useLumiBlocks:
                 self.readCollections( iEvent )
-                self.count.inc('Sum Weights', self.mchandles['GenInfo'].product().weight())
+                if self.cfg_comp.isMC:
+                    self.count.inc('Sum Weights', self.mchandles['GenInfo'].product().weight())
         return True
