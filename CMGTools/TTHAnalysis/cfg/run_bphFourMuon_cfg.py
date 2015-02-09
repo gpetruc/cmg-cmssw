@@ -19,13 +19,13 @@ ttHLepSkim.maxLeptons = 999
 #ttHLepSkim.ptCuts = []
 
 # inclusive very loose muon selection
-ttHLepAna.inclusive_muon_id  = "POG_ID_Soft"
+ttHLepAna.inclusive_muon_id  = "POG_ID_SoftNew"
 ttHLepAna.inclusive_muon_pt  = 2
 ttHLepAna.inclusive_muon_eta = 2.4
 ttHLepAna.inclusive_muon_dxy = 3.0
 ttHLepAna.inclusive_muon_dz  = 30.0
 # loose muon selection
-ttHLepAna.loose_muon_id     = "POG_ID_Soft"
+ttHLepAna.loose_muon_id     = "POG_ID_SoftNew"
 ttHLepAna.loose_muon_pt     = 2
 ttHLepAna.loose_muon_eta    = 2.4
 ttHLepAna.loose_muon_dxy    = 3.0
@@ -43,8 +43,8 @@ bphFourMuAna = cfg.Analyzer(
     'bphFourMuonAnalyzer',
     )
 
-trigger_3mu_jpsi    = "HLT_DiMuon0_Jpsi_Muon_v*"
-trigger_3mu_upsilon = "HLT_DiMuon0_Upsilon_Muon_v*"
+trigger_3mu_jpsi    = "HLT_Dimuon0_Jpsi_Muon_v*"
+trigger_3mu_upsilon = "HLT_Dimuon0_Upsilon_Muon_v*"
 trigger_3mu_five    = "HLT_TripleMu5_v*"
 triggers_3mu_onia = [ trigger_3mu_jpsi, trigger_3mu_upsilon ]
 triggers_3mu = [ trigger_3mu_jpsi, trigger_3mu_upsilon, trigger_3mu_five ]
@@ -55,10 +55,10 @@ treeProducer = cfg.Analyzer(
     saveTLorentzVectors = False,  # can set to True to get also the TLorentzVectors, but trees will be bigger
     PDFWeights = PDFWeights,
     triggerBits = {
-            'Jpsi'    : [ trigger_3mu_jpsi ] ,
-            'Upsilon' : [ trigger_3mu_upsilon ] ,
-            'TriMu5 ' : [ trigger_3mu_five ],
-            'PDMuOnia ' : [ trigger_3mu_jpsi, trigger_3mu_upsilon  ],
+            'Jpsi'    : [ trigger_3mu_jpsi ],
+            'Upsilon' : [ trigger_3mu_upsilon ],
+            'TriMu5'  : [ trigger_3mu_five ],
+            'PDMuOnia' : [ trigger_3mu_jpsi, trigger_3mu_upsilon ],
         }
     )
 
@@ -69,8 +69,14 @@ from CMGTools.TTHAnalysis.samples.samples_8TeV_v517 import *
 for mc in mcSamples+mcSamplesAll:
     mc.triggers = triggers_3mu
 
+for data in dataSamplesMuOnia:
+    data.triggers = triggers_3mu_onia
+for data in dataSamplesMu:
+    data.triggers = trigger_3mu_five
+    data.vetoTriggers= triggers_3mu_onia
 
-selectedComponents = mcSamplesAll + dataSamplesAll
+#selectedComponents = mcSamplesAll + dataSamplesAll
+selectedComponents = dataSamplesMu + dataSamplesMuOnia
 
 #-------- SEQUENCE
 
@@ -84,7 +90,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 test = 1
 if test==1:
     # test a single component, using a single thread.
-    comp = ZZTo4mu 
+    comp = MuOniaD
     comp.files = comp.files[:1]
     selectedComponents = [comp]
     comp.splitFactor = 1

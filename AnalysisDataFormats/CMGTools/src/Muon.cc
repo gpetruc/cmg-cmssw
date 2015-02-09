@@ -10,6 +10,7 @@ namespace {
     const std::unordered_map<std::string,cmg::Muon::MuonID> & fill_muon_id_map() {
         if (_muon_id_map.empty()) {
             _muon_id_map["POG_ID_Soft"] = cmg::Muon::POG_ID_Soft;
+	    _muon_id_map["POG_ID_SoftNew"] = cmg::Muon::POG_ID_SoftNew;
             _muon_id_map["POG_ID_Loose"] = cmg::Muon::POG_ID_Loose;
             _muon_id_map["POG_ID_Tight"] = cmg::Muon::POG_ID_Tight;
             _muon_id_map["POG_ID_HighPt"] = cmg::Muon::POG_ID_HighPt;
@@ -30,6 +31,9 @@ bool cmg::Muon::muonID(MuonID id, const reco::Vertex *vtx) const
         case POG_ID_Soft:   
                 if (vtx == 0) throw cms::Exception("InvalidArgument", "POG_ID_Soft requires a vertex");
                 return muon::isSoftMuon(mu, *vtx);
+	case POG_ID_SoftNew:   
+                if (vtx == 0) throw cms::Exception("InvalidArgument", "POG_ID_SoftNew requires a vertex");
+                return muon::isGoodMuon(mu,muon::TMOneStationTight) && mu.track()->hitPattern().trackerLayersWithMeasurement() > 5 && mu.track()->hitPattern().numberOfValidPixelHits() > 0 && abs(mu.track()->dxy(vtx->position())) < 0.3 && abs(mu.track()->dxy(vtx->position())) < 20 && mu.track()->quality(reco::TrackBase::highPurity);
         case POG_ID_Tight:  
                 if (vtx == 0) throw cms::Exception("InvalidArgument", "POG_ID_Tight requires a vertex");
                 return muon::isTightMuon(mu, *vtx);

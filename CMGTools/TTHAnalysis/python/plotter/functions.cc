@@ -91,4 +91,117 @@ float mtw_wz3l(float pt1, float eta1, float phi1, float m1, float pt2, float eta
     if (abs(mZ1 - mass_2(pt2,eta2,phi2,m2,pt3,eta3,phi3,m3)) < 0.01) return mt_2(pt1,phi1,met,metphi);
     return 0;
 }
+
+
+
+float mYbest(float m11, float m12, float m21, float m22)  {
+   float dm11 = std::abs(m11-9.46);
+   float dm12 = std::abs(m12-9.46);
+   float dm21 = std::abs(m21-9.46);
+   float dm22 = std::abs(m22-9.46);  
+   float mindm = std::min(std::min(dm11,dm12),std::min(dm21,dm22));
+   if (mindm == dm11) { 
+      return m11;
+   } else if (mindm == dm12) {
+      return m12;
+   } else if (mindm == dm21) {
+      return m21;
+   } else {
+      return m22;
+   }
+}
+
+float mYbestVtxProb(float m11, float m12, float m21, float m22, float vtx11, float vtx12, float vtx21, float vtx22)  {
+   float dm11 = std::abs(m11-9.46);
+   float dm12 = std::abs(m12-9.46);
+   float dm21 = std::abs(m21-9.46);
+   float dm22 = std::abs(m22-9.46);  
+   float mindm = std::min(std::min(dm11,dm12),std::min(dm21,dm22));
+   if (mindm == dm11) { 
+      return vtx11;
+   } else if (mindm == dm12) {
+      return vtx12;
+   } else if (mindm == dm21) {
+      return vtx21;
+   } else {
+      return vtx22;
+   }
+}
+
+
+float mYbesty(float m11, float m12, float m21, float m22, float y11, float y12, float y21, float y22)  {
+   float dm11 = std::abs(m11-9.46);
+   float dm12 = std::abs(m12-9.46);
+   float dm21 = std::abs(m21-9.46);
+   float dm22 = std::abs(m22-9.46);  
+   float mindm = std::min(std::min(dm11,dm12),std::min(dm21,dm22));
+   if (mindm == dm11) { 
+      return y11;
+   } else if (mindm == dm12) {
+      return y12;
+   } else if (mindm == dm21) {
+      return y21;
+   } else {
+      return y22;
+   }
+}
+
+
+
+float mYother(float m11, float m12, float m21, float m22)  {
+   float dm11 = std::abs(m11-9.46);
+   float dm12 = std::abs(m12-9.46);
+   float dm21 = std::abs(m21-9.46);
+   float dm22 = std::abs(m22-9.46);  
+   float mindm = std::min(std::min(dm11,dm12),std::min(dm21,dm22));
+   if (mindm == dm11) { 
+      return m12;
+   } else if (mindm == dm12) {
+      return m11;
+   } else if (mindm == dm21) {
+      return m22;
+   } else {
+      return m21;
+   }
+}
+
+
+float mYotherVtxProb(float m11, float m12, float m21, float m22, float vtx11, float vtx12, float vtx21, float vtx22)  {
+   float dm11 = std::abs(m11-9.46);
+   float dm12 = std::abs(m12-9.46);
+   float dm21 = std::abs(m21-9.46);
+   float dm22 = std::abs(m22-9.46);  
+   float mindm = std::min(std::min(dm11,dm12),std::min(dm21,dm22));
+   if (mindm == dm11) { 
+      return vtx12;
+   } else if (mindm == dm12) {
+      return vtx11;
+   } else if (mindm == dm21) {
+      return vtx22;
+   } else {
+      return vtx21;
+   }
+}
+
+
+float mYothery(float m11, float m12, float m21, float m22, float y11, float y12, float y21, float y22)  {
+   float dm11 = std::abs(m11-9.46);
+   float dm12 = std::abs(m12-9.46);
+   float dm21 = std::abs(m21-9.46);
+   float dm22 = std::abs(m22-9.46);  
+   float mindm = std::min(std::min(dm11,dm12),std::min(dm21,dm22));
+   if (mindm == dm11) { 
+      return y12;
+   } else if (mindm == dm12) {
+      return y11;
+   } else if (mindm == dm21) {
+      return y22;
+   } else {
+      return y21;
+   }
+}
+
+
+
+
 void functions() {}
