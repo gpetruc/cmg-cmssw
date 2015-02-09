@@ -32,6 +32,8 @@ class bphDilepton:
         self.mll = (l1.p4()+l2.p4()).M()
         self.vtx2l = twoTrackChi2(l1,l2)
         self.vtx2l_prob = TMath.Prob(self.vtx2l[0],int(self.vtx2l[1]))
+        self.y2l = (l1.p4()+l2.p4()).Rapidity()
+        self.nT = l1.tightId() + l1.tightId()
         self.leps = [l1,l2]
 
 class bphFourlepton:
@@ -40,6 +42,7 @@ class bphFourlepton:
         self.dil12  = dil12
         self.dil21  = dil21
         self.dil22  = dil22
+        self.mY1 = min([dil11.mll, dil12.mll, dil21.mll, dil22.mll], key= lambda l : abs(l-9.46))
         self.leps = dil11.leps + dil12.leps 
         self.p4   = (dil11.p4+dil12.p4)
         self.m4l  = (dil11.p4+dil12.p4).M()
@@ -80,8 +83,9 @@ class bphFourMuonAnalyzer( Analyzer ):
                 if dil21.mll < dil22.mll:
                     (dil21,dil22) = (dil22,dil21)
                 if dil21.mll > dil11.mll: continue
-                event.fourleptons.append( bphFourlepton(dil11,dil12,dil21,dil22) )
-
+                event.fourleptons.append( bphFourlepton(dil11,dil12,dil21,dil22) )  
+        event.fourleptons.sort(key = lambda cand : (abs(cand.mY1-9.46) , -cand.vtx4l_prob))        
+             
 
     def process(self, iEvent, event):
         self.readCollections( iEvent )

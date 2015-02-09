@@ -67,7 +67,7 @@ leptonTypeSusy = NTupleObjectType("leptonSusy", baseObjectTypes = [ leptonType ]
     NTupleVariable("nStations",    lambda lepton : lepton.sourcePtr().numberOfMatchedStations() if abs(lepton.pdgId()) == 13 else 4, help="Number of matched muons stations (4 for electrons)"),
     NTupleVariable("trkKink",      lambda lepton : lepton.sourcePtr().combinedQuality().trkKink if abs(lepton.pdgId()) == 13 else 0, help="Tracker kink-finder"), 
     NTupleVariable("caloCompatibility",      lambda lepton : lepton.sourcePtr().caloCompatibility() if abs(lepton.pdgId()) == 13 else 0, help="Calorimetric compatibility"), 
-    NTupleVariable("globalTrackChi2",      lambda lepton : lepton.sourcePtr().globalTrack().normalizedChi2() if abs(lepton.pdgId()) == 13 and lepton.sourcePtr().globalTrack().isNonnull() else 0, help="Tracker kink-finder"), 
+    NTupleVariable("globalTrackChi2",      lambda lepton : lepton.sourcePtr().globalTrack().normalizedChi2() if abs(lepton.pdgId()) == 13 and lepton.sourcePtr().globalTrack().isNonnull() else 0, help="Global track chi2"), 
     # Extra tracker-related id variables
     NTupleVariable("trackerLayers", lambda x : (x.sourcePtr().track() if abs(x.pdgId())==13 else x.sourcePtr().gsfTrack()).hitPattern().trackerLayersWithMeasurement(), int, help="Tracker Layers"),
     NTupleVariable("pixelLayers", lambda x : (x.sourcePtr().track() if abs(x.pdgId())==13 else x.sourcePtr().gsfTrack()).hitPattern().pixelLayersWithMeasurement(), int, help="Pixel Layers"),
@@ -104,8 +104,12 @@ leptonTypeSusyFR = NTupleObjectType("leptonSusyFR", baseObjectTypes = [ leptonTy
 leptonTypeFull = NTupleObjectType("leptonFull", baseObjectTypes = [ leptonTypeSusy ], variables = [
     NTupleVariable("pfMuonId",    lambda x : x.muonID("POG_ID_Loose") if abs(x.pdgId())==13 else 1, int, help="Muon POG Loose id"),
     NTupleVariable("softMuonId",    lambda x : x.muonID("POG_ID_Soft") if abs(x.pdgId())==13 else 1, int, help="Muon POG Soft id"),
+    NTupleVariable("softMuonIdNew",    lambda x : x.muonID("POG_ID_SoftNew") if abs(x.pdgId())==13 else 1, int, help="Muon POG Soft New id"),
+    NTupleVariable("TMOST",    lambda x : x.sourcePtr().muonID("TMOneStationTight") if abs(x.pdgId())==13 else 1, int, help="Muon POG TMOST"),
+    NTupleVariable("trackHP",    lambda x : x.sourcePtr().track().quality(ROOT.reco.TrackBase.highPurity) if abs(x.pdgId())==13 else 1, int, help="Muon POG Soft New id"),
+    NTupleVariable("innerTrackChi2", lambda lepton : lepton.sourcePtr().track().normalizedChi2() if abs(lepton.pdgId()) == 13 else 0, help="Inner track chi2"), 
 ])
- 
+
 
 tauType = NTupleObjectType("tau",  baseObjectTypes = [ particleType ], variables = [
     NTupleVariable("charge",   lambda x : x.charge(), int),

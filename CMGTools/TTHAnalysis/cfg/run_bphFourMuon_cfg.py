@@ -19,7 +19,7 @@ ttHLepSkim.maxLeptons = 999
 #ttHLepSkim.ptCuts = []
 
 # inclusive very loose muon selection
-ttHLepAna.inclusive_muon_id  = "POG_ID_SoftNew"
+ttHLepAna.inclusive_muon_id  = ""
 ttHLepAna.inclusive_muon_pt  = 2
 ttHLepAna.inclusive_muon_eta = 2.4
 ttHLepAna.inclusive_muon_dxy = 3.0

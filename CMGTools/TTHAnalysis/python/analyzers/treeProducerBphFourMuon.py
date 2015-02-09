@@ -12,10 +12,23 @@ bphFourLepType = NTupleObjectType("bphFourLep", variables = [
     NTupleVariable("vtx12",  lambda x : x.dil12.vtx2l_prob),
     NTupleVariable("vtx21",  lambda x : x.dil21.vtx2l_prob),
     NTupleVariable("vtx22",  lambda x : x.dil22.vtx2l_prob),
-    NTupleVariable("l1",  lambda x : x.dil11.idx1),
-    NTupleVariable("l2",  lambda x : x.dil11.idx2),
-    NTupleVariable("l3",  lambda x : x.dil12.idx1),
-    NTupleVariable("l4",  lambda x : x.dil12.idx2),
+    NTupleVariable("y11",  lambda x : x.dil11.y2l),
+    NTupleVariable("y12",  lambda x : x.dil12.y2l),
+    NTupleVariable("y21",  lambda x : x.dil21.y2l),
+    NTupleVariable("y22",  lambda x : x.dil22.y2l),
+    NTupleVariable("nT11",  lambda x : x.dil11.nT),
+    NTupleVariable("nT12",  lambda x : x.dil12.nT),
+    NTupleVariable("nT21",  lambda x : x.dil21.nT),
+    NTupleVariable("nT22",  lambda x : x.dil22.nT),
+    NTupleVariable("l1h",  lambda x : x.dil11.idx1),
+    NTupleVariable("l2h",  lambda x : x.dil11.idx2),
+    NTupleVariable("l3h",  lambda x : x.dil12.idx1),
+    NTupleVariable("l4h",  lambda x : x.dil12.idx2),
+    NTupleVariable("l1l",  lambda x : x.dil21.idx1),
+    NTupleVariable("l2l",  lambda x : x.dil21.idx2),
+    NTupleVariable("l3l",  lambda x : x.dil22.idx1),
+    NTupleVariable("l4l",  lambda x : x.dil22.idx2),
+
 
 ])
 
@@ -39,8 +52,10 @@ class treeProducerBphFourMuon( ttHLepTreeProducerNew ):
         }
 
         self.collections = {
-            "selectedLeptons" : NTupleCollection("Lep",  leptonTypeSusy, 20, help="Leptons after the preselection"),
+            "selectedLeptons" : NTupleCollection("Lep",  leptonTypeFull, 20, help="Leptons after the preselection"),
+            "otherLeptons"    : NTupleCollection("LepOther", leptonTypeFull, 20, help="Leptons after the preselection"),
             "fourleptons"     : NTupleCollection("Cand", bphFourLepType, 20, help="Four-lepton candidates"),
+            
         }
 
         ## Book the variables, but only if we're called explicitly and not through a base class
