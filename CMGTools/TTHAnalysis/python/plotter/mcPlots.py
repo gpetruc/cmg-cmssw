@@ -474,6 +474,7 @@ class PlotMaker:
             for pspec in plots.plots():
                 print "    plot: ",pspec.name
                 pmap = mca.getPlots(pspec,cut,makeSummary=True)
+                if len(pmap) == 0: continue
                 #
                 # blinding policy
                 blind = pspec.getOption('Blinded','None') if 'data' in pmap else 'None'
@@ -502,8 +503,12 @@ class PlotMaker:
                 #
                 stack = ROOT.THStack(pspec.name+"_stack",pspec.name)
                 hists = [v for k,v in pmap.iteritems() if k != 'data']
-                total = hists[0].Clone(pspec.name+"_total"); total.Reset()
-                totalSyst = hists[0].Clone(pspec.name+"_totalSyst"); totalSyst.Reset()
+                if len(hists) == 0: # only data:
+                    total = pmap['data'].Clone(pspec.name+"_total"); total.Reset()
+                    stack = pmap['data']
+                else:
+                    total = hists[0].Clone(pspec.name+"_total"); total.Reset()
+                    totalSyst = hists[0].Clone(pspec.name+"_totalSyst"); totalSyst.Reset()
                 if self._options.plotmode == "norm": 
                     if 'data' in pmap:
                         total.GetYaxis().SetTitle(total.GetYaxis().GetTitle()+" (normalized)")

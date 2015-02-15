@@ -13,7 +13,7 @@ from CMGTools.TTHAnalysis.analyzers.susyCore_modules_cff import *
 # Redefine what I need
 
 # --- LEPTON SKIMMING ---
-ttHLepSkim.minLeptons = 4
+ttHLepSkim.minLeptons = 1
 ttHLepSkim.maxLeptons = 999
 #ttHLepSkim.idCut  = ""
 #ttHLepSkim.ptCuts = []
@@ -25,7 +25,7 @@ ttHLepAna.inclusive_muon_eta = 2.4
 ttHLepAna.inclusive_muon_dxy = 3.0
 ttHLepAna.inclusive_muon_dz  = 30.0
 # loose muon selection
-ttHLepAna.loose_muon_id     = "POG_ID_SoftNew"
+ttHLepAna.loose_muon_id     = "" #"POG_ID_SoftNew"
 ttHLepAna.loose_muon_pt     = 2
 ttHLepAna.loose_muon_eta    = 2.4
 ttHLepAna.loose_muon_dxy    = 3.0
@@ -87,16 +87,41 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 
 #-------- HOW TO RUN
-test = 1
+test = 2
 if test==1:
     # test a single component, using a single thread.
-    comp = MuOniaD
-    comp.files = comp.files[:1]
+    comp = MuOniaAB
     selectedComponents = [comp]
-    comp.splitFactor = 1
+    comp.splitFactor = 60
+    eventSelector.toSelect = [
+        (190705,50,47481560),
+        (190707,169,181561506),
+        (190906,231,225619657),
+        (191226,89,50899112),
+        (191837,33,30725745),
+        (193336,242,185660276),
+        (193336,501,353871183),
+        (193621,142,112638382),
+        (193621,1469,1131495656),
+        (193621,521,472972796),
+    ]
+elif test==2:
+    # test a single component, using a single thread.
+    selectedComponents = [MuOniaAB,MuOniaC,MuOniaD]
+    for comp in selectedComponents:
+        comp.splitFactor = 60
+    eventSelector.toSelect = set()
+    kai = open("/afs/cern.ch/user/g/gpetrucc/scratch0/cmgprod/CMSSW_5_3_22/src/CMGTools/TTHAnalysis/python/plotter/2012MuOniaforCristina.runlist");
+    for line in kai:
+        fields = line.split()
+        if len(fields) < 3: continue
+        eventSelector.toSelect.add( (int(fields[0]),int(fields[1]),int(fields[2])) )
+    print "trying to select ",len(eventSelector.toSelect),"files"
+
+
 
 
 config = cfg.Config( components = selectedComponents,
-                     sequence = sequence )
+                     sequence = [eventSelector]+sequence )
 
 printComps(config.components, True)

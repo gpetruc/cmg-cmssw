@@ -28,8 +28,14 @@ bphFourLepType = NTupleObjectType("bphFourLep", variables = [
     NTupleVariable("l2l",  lambda x : x.dil21.idx2),
     NTupleVariable("l3l",  lambda x : x.dil22.idx1),
     NTupleVariable("l4l",  lambda x : x.dil22.idx2),
+])
 
-
+bphDiLepType = NTupleObjectType("bphDiLep", variables = [
+    NTupleVariable("mass", lambda x : x.mll),
+    NTupleVariable("vtx2",   lambda x : x.vtx2l_prob),
+    NTupleVariable("y",  lambda x : x.y2l),
+    NTupleVariable("l1",  lambda x : x.idx1),
+    NTupleVariable("l2",  lambda x : x.idx2),
 ])
 
 class treeProducerBphFourMuon( ttHLepTreeProducerNew ):
@@ -52,10 +58,10 @@ class treeProducerBphFourMuon( ttHLepTreeProducerNew ):
         }
 
         self.collections = {
-            "selectedLeptons" : NTupleCollection("Lep",  leptonTypeFull, 20, help="Leptons after the preselection"),
-            "otherLeptons"    : NTupleCollection("LepOther", leptonTypeFull, 20, help="Leptons after the preselection"),
-            "fourleptons"     : NTupleCollection("Cand", bphFourLepType, 20, help="Four-lepton candidates"),
-            
+            "selectedLeptons" : NTupleCollection("Lep",  leptonTypeFull, 100, help="Leptons after the preselection"),
+            "otherLeptons"    : NTupleCollection("LepOther", leptonTypeFull, 100, help="Leptons after the preselection"),
+            "fourleptons"     : NTupleCollection("Cand", bphFourLepType, 2000, help="Four-lepton candidates"),
+            "dileptonList"    : NTupleCollection("DiLep",    bphDiLepType,   1000, help="Di-lepton candidates"),
         }
 
         ## Book the variables, but only if we're called explicitly and not through a base class

@@ -106,7 +106,12 @@ leptonTypeFull = NTupleObjectType("leptonFull", baseObjectTypes = [ leptonTypeSu
     NTupleVariable("softMuonId",    lambda x : x.muonID("POG_ID_Soft") if abs(x.pdgId())==13 else 1, int, help="Muon POG Soft id"),
     NTupleVariable("softMuonIdNew",    lambda x : x.muonID("POG_ID_SoftNew") if abs(x.pdgId())==13 else 1, int, help="Muon POG Soft New id"),
     NTupleVariable("TMOST",    lambda x : x.sourcePtr().muonID("TMOneStationTight") if abs(x.pdgId())==13 else 1, int, help="Muon POG TMOST"),
-    NTupleVariable("trackHP",    lambda x : x.sourcePtr().track().quality(ROOT.reco.TrackBase.highPurity) if abs(x.pdgId())==13 else 1, int, help="Muon POG Soft New id"),
+    NTupleVariable("TMOSL",    lambda x : x.sourcePtr().muonID("TMOneStationLoose") if abs(x.pdgId())==13 else 1, int, help="Muon POG TMOSL"),
+    NTupleVariable("TM",    lambda x : x.sourcePtr().muonID("AllTrackerMuons") if abs(x.pdgId())==13 else 1, int, help="Muon POG AlllTrackerMuons"),
+    NTupleVariable("TMA",    lambda x : x.sourcePtr().muonID("TrackerMuonArbitrated") if abs(x.pdgId())==13 else 1, int, help="Muon POG TrackerMuonArbitrated"),
+    NTupleVariable("GM",    lambda x : x.sourcePtr().muonID("AllGlobalMuons") if abs(x.pdgId())==13 else 1, int, help="Muon POG AllGlobalMuon"),
+    NTupleVariable("trackHP",    lambda x : x.sourcePtr().track().quality(ROOT.reco.TrackBase.highPurity) if abs(x.pdgId())==13 else 1, int, help="Track passes highPurity"),
+    NTupleVariable("SBCleaner",  lambda x : getattr(x,'passesSegmentBasedCleaner',-1), int, help="Muon POG Soft New id"),
     NTupleVariable("innerTrackChi2", lambda lepton : lepton.sourcePtr().track().normalizedChi2() if abs(lepton.pdgId()) == 13 else 0, help="Inner track chi2"), 
 ])
 

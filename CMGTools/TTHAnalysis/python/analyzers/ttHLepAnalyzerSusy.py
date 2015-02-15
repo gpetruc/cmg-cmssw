@@ -164,10 +164,14 @@ class ttHLepAnalyzerSusy( Analyzer ):
         # Clean up dulicate muons (note: has no effect unless the muon id is removed)
         if self.cfg_ana.doSegmentBasedMuonCleaning:
             isgood = cmgMuonCleanerBySegments.clean( self.handles['muons'].product() )
-            newmu = []
-            for i,mu in enumerate(allmuons):
-                if isgood[i]: newmu.append(mu)
-            allmuons = newmu
+            if self.cfg_ana.doSegmentBasedMuonCleaning == "flag":
+                for i,mu in enumerate(allmuons):
+                    mu.passesSegmentBasedCleaner = isgood[i]
+            else:
+                newmu = []
+                for i,mu in enumerate(allmuons):
+                    if isgood[i]: newmu.append(mu)
+                allmuons = newmu
 
         # Attach the vertex to them, for dxy/dz calculation
         for mu in allmuons:

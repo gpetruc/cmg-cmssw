@@ -71,6 +71,7 @@ class bphFourMuonAnalyzer( Analyzer ):
                 if l1.charge() + l2.charge() == 0:
                     dilepton = bphDilepton(i,l1,j,l2) 
                     event.dileptons[ (dilepton.idx1,dilepton.idx2) ] = dilepton 
+        event.dileptonList = [ v for (k,v) in event.dileptons.iteritems() ]
 
     def makeFourleps(self, event):
         event.fourleptons = []
@@ -93,4 +94,4 @@ class bphFourMuonAnalyzer( Analyzer ):
         print "found %d dilepton candidates (possibly partially overlapping)" % len(event.dileptons)
         self.makeFourleps( event )
         print "found %d four-lepton candidates (possibly partially overlapping)" % len(event.fourleptons)
-        return len(event.fourleptons) > 0
+        return True

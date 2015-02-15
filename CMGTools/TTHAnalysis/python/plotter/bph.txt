@@ -1,0 +1,38 @@
+#triggerBit: HLT_Upsilon
+#triggerBit: HLT_Jpsi
+#triggerBit: HLT_TriMu5
+
+####Analysis1
+#vertexes
+
+allCand: Cand_mass > 0
+max4muMass: Cand_mass < 25 && Cand_mass > 11.8
+maxCands: nCand < 100
+
+KaiCand: Cand_isKai
+#KaiCand12: Cand_isKai12
+#peak: abs(Cand_mass-18.5)<0.5
+TMA: (Lep_nStations[Cand_l1h]>0) && (Lep_nStations[Cand_l2h]>0) && (Lep_nStations[Cand_l3h]>0) && (Lep_nStations[Cand_l4h]>0)
+#TMOSL: (Lep_TMOST[Cand_l1h]+Lep_TMOST[Cand_l2h]+Lep_TMOST[Cand_l3h]+Lep_TMOST[Cand_l4h])>=4
+#TMOST: (Lep_TMOST[Cand_l1h]+Lep_TMOST[Cand_l2h]+Lep_TMOST[Cand_l3h]+Lep_TMOST[Cand_l4h])>=4
+#softId: (Lep_softMuonId[Cand_l1h]+Lep_softMuonId[Cand_l2h]+Lep_softMuonId[Cand_l3h]+Lep_softMuonId[Cand_l4h])>=4
+
+vtx4mu: Cand_vtx4 >= 0.05
+vtx2mu: (Cand_vtx11 >= 0.005 && Cand_vtx12 >= 0.005) || (Cand_vtx21 >= 0.005 && Cand_vtx22 >=0.005)
+#dimuon mass: 
+tightID: (Lep_tightId[Cand_l1h]+Lep_tightId[Cand_l2h]+Lep_tightId[Cand_l3h]+Lep_tightId[Cand_l4h])>=2
+y1sy1sstar: (abs(Cand_m11-9.46)<=3*(0.0572+0.03602*abs(Cand_y11)) && Cand_m12 < (9.46-3*(0.0572+0.03602*abs(Cand_y12)))) || (abs(Cand_m21-9.46)<= 3*(0.0572+0.03602*abs(Cand_y21)) && Cand_m22 < 9.46-3*(0.0572+0.03602*abs(Cand_y22)))
+#y1sy1sstarNoJpsi: (abs(Cand_m11-9.46)<=3*(0.0572+0.03602*abs(Cand_y11)) && Cand_m12 <(9.46-3*(0.0572+0.03602*abs(Cand_y12))) && (Cand_m12 < 2.9 || Cand_m12>3.3)) || (abs(Cand_m21-9.46)<= 3*(0.0572+0.03602*abs(Cand_y21)) && Cand_m22 < 9.46-3*(0.0572+0.03602*abs(Cand_y22)) && (Cand_m22 < 2.9 || Cand_m22 > 3.3))
+
+#Our: (Cand_vtx4 >= 0.05 && (Lep_softMuonId[Cand_l1h]+Lep_softMuonId[Cand_l2h]+Lep_softMuonId[Cand_l3h]+Lep_softMuonId[Cand_l4h])>=4 && ((Cand_vtx11 >= 0.005 && Cand_vtx12 >=0.005) || (Cand_vtx21 >= 0.005 && Cand_vtx22 >=0.005)) && (Lep_tightId[Cand_l1h]+Lep_tightId[Cand_l2h]+Lep_tightId[Cand_l3h]+Lep_tightId[Cand_l4h])>=2 && ((abs(Cand_m11-9.46)<=3*(0.0572+0.03602*abs(Cand_y11)) && Cand_m12 < (9.46-3*(0.0572+0.03602*abs(Cand_y12)))) || (abs(Cand_m21-9.46)<= 3*(0.0572+0.03602*abs(Cand_y21)) && Cand_m22 < 9.46-3*(0.0572+0.03602*abs(Cand_y22)))))
+
+
+# ####Analysis2
+# max4muMass: Cand_mass[0] < 25 && Cand_mass[0] > 11.8
+# #vertexes
+# vtx4mu: Cand_vtx4[0] >= 0.05
+# vtx2mu: mYbestVtxProb(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0],Cand_vtx11[0],Cand_vtx12[0],Cand_vtx21[0],Cand_vtx22[0])>= 0.005 && mYotherVtxProb(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0],Cand_vtx11[0],Cand_vtx12[0],Cand_vtx21[0],Cand_vtx22[0])>=0.005
+# #dimuon mass: 
+# tightID:(Lep_tightId[Cand_l1h[0]]+Lep_tightId[Cand_l2h[0]]+Lep_tightId[Cand_l3h[0]]+Lep_tightId[Cand_l4h[0]])>=2
+# y1sy1sstar: abs(mYbest(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0])-9.46)<=3*(0.0572+0.03602*abs(mYbesty(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0],Cand_y11[0],Cand_y12[0],Cand_y21[0],Cand_y22[0]))) && mYother(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0]) < (9.46-3*(0.0572+0.03602*abs(mYothery(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0],Cand_y11[0],Cand_y12[0],Cand_y21[0],Cand_y22[0]))))
+# #y1sy1sstarNoJpsi: abs(mYbest(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0])-9.46)<=3*(0.0572+0.03602*abs(mYbesty(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0],Cand_y11[0],Cand_y12[0],Cand_y21[0],Cand_y22[0]))) && mYother(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0]) < (9.46-3*(0.0572+0.03602*abs(mYothery(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0],Cand_y11[0],Cand_y12[0],Cand_y21[0],Cand_y22[0])))) && (mYother(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0])<2.9 || mYother(Cand_m11[0],Cand_m12[0],Cand_m21[0],Cand_m22[0])>3.3)

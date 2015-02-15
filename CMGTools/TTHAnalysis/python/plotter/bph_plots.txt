@@ -1,0 +1,7 @@
+#4muMass: Cand_mass[0]: 66,11.8,25; XTitle="M_{4#mu} [GeV]"
+4muMass: Cand_mass: 66,11.8,25; XTitle="M_{4#mu} [GeV]"
+#mY1: Cand_mY: 50,0,20; XTitle="M_{Y} [GeV]"
+#mY1_zoom: Cand_mY: 30,7,11; XTitle="M_{Y} [GeV]"
+#mY1s: Cand_mYOther:  100,0,40; XTitle="M_{YOther} [GeV]"
+#worstSIP: max(max(Lep_sip3d[Cand_l1],Lep_sip3d[Cand_l2]),max(Lep_sip3d[Cand_l3],Lep_sip3d[Cand_l4])): 100, 0, 20; XTitle="max leps SIP3D"
+#vtx4mu: Cand_vtx4 : 100,0,1; XTitle="4mu vtx prob"

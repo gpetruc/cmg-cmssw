@@ -2,6 +2,7 @@ from CMGTools.TTHAnalysis.samples.getFiles import getFiles
 import CMGTools.RootTools.fwlite.Config as cfg
 import os
 
+pat0='PAT_CMG_V5_15_0'
 pat='PAT_CMG_V5_17_0'
 patNew='PAT_CMG_V5_18_0'
 patPF='CMGPF_V5_16_0'
@@ -79,6 +80,7 @@ kreator = ComponentCreator()
 
 #-----------MC---------------
 ## --- TTH ---
+HZZ4l      =kreator.makeMCComponent('HZZ4l','/GluGluToHToZZTo4L_M-125_8TeV-powheg15-pythia6/Summer12_DR53X-PU_S10_START53_V19-v1/AODSIM/'+pat0,userName,filepattern)
 TTH      =kreator.makeMCComponent('TTH','/TTH_Inclusive_M-125_8TeV_pythia6/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM/V5/'+pat,userName,filepattern)
 TTH122   =kreator.makeMCComponent('TTH122','/TTH_Inclusive_M-122_5_8TeV_pythia6/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM/V5_B/'+patNew,userName,filepattern)
 TTH127   =kreator.makeMCComponent('TTH127','/TTH_Inclusive_M-127_5_8TeV_pythia6/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM/V5_B/'+patNew,userName,filepattern)
@@ -199,7 +201,7 @@ WpWpqq  =kreator.makeMCComponent('WpWpqq',  '/WpWpqq_8TeV-madgraph/Summer12_DR53
 
 # ----- FINAL LISTS OF BACKGROUNDS ------
 #   ## Critical samples (major signals and backgrounds, and a few small samples)
-mcSamples_1 = [ TTH,TTWJets,TTZJets,TTWWJets,WWWJets,WWZJets,TTG,DYJetsM50,TTJetsLep,TTJetsSem,TTJets,TtW,TbartW,WZJets,ZZJets4L,WWJets,DYJetsM10, ZZ2e2mu,ZZ2e2tau,ZZ2mu2tau,ZZTo4mu,ZZTo4e,ZZTo4tau,
+mcSamples_1 = [ HZZ4l, TTH,TTWJets,TTZJets,TTWWJets,WWWJets,WWZJets,TTG,DYJetsM50,TTJetsLep,TTJetsSem,TTJets,TtW,TbartW,WZJets,ZZJets4L,WWJets,DYJetsM10, ZZ2e2mu,ZZ2e2tau,ZZ2mu2tau,ZZTo4mu,ZZTo4e,ZZTo4tau,
                 W1Jets,W2Jets,W3Jets,W4Jets,WJets_HT250To300,WJets_HT300To400,WJets_HT400ToInf,DY1JetsM50,DY2JetsM50,DY3JetsM50,DY4JetsM50,TTJetsSem,ZNuNu50HT100,ZNuNu100HT200,ZNuNu200HT400,ZNuNu400 ]
 #   ## Minor samples and backgrounds 
 mcSamples_2 = [ Tsch,Tbarsch,Ttch,Tbartch,WZZJets,ZZZJets,WWGJets,TTLep,TTJetsSem2,TTJetsHad, TBZToLL,WmWmqq,WpWpqq,TTH122,TTH127,WJetsPtW50To70,WJetsPtW70To100,WJetsPtW100]
@@ -344,7 +346,35 @@ mcSamplesAll = mcSamples+mcSamples_4+susySamples+fastSimSamples
 dataDir = os.environ['CMSSW_BASE']+"/src/CMGTools/TTHAnalysis/data"
 #lumi: 12.21+7.27+0.134 = 19.62 /fb @ 8TeV
 
-json=dataDir+'/json/Cert_Run2012ABCD_22Jan2013ReReco.json'
+#json=dataDir+'/json/Cert_Run2012ABCD_22Jan2013ReReco.json'
+json=dataDir+'/json/Cert_190456-208686_8TeV_22Jan2013ReReco_Collisions12_JSON_MuonPhys.json'
+
+
+MuOniaAB = cfg.DataComponent(
+    name = 'MuOniaAB',
+    files = getFiles('/MuOnia/Run2012A-22Jan2013-v1/AOD/'+patNew,userName,filepattern)+ \
+            getFiles('/MuOnia/Run2012B-22Jan2013-v1/AOD/'+patNew,userName,filepattern),
+    intLumi = 1,
+    triggers = [],
+    json = json
+    )
+
+MuOniaC = cfg.DataComponent(
+    name = 'MuOniaC',
+    files = getFiles('/MuOnia/Run2012C-22Jan2013-v1/AOD/'+patNew,userName,filepattern),
+    intLumi = 1,
+    triggers = [],
+    json = json
+    )
+
+MuOniaD = cfg.DataComponent(
+    name = 'MuOniaD',
+    files = getFiles('/MuOnia/Run2012D-22Jan2013-v1/AOD/'+patNew,userName,filepattern),
+    intLumi = 1,
+    triggers = [],
+    json = json
+    )
+
 
 DoubleMuAB = cfg.DataComponent(
     name = 'DoubleMuAB',
@@ -477,7 +507,9 @@ METD = cfg.DataComponent(
    
 #   ####################################################################################################################
 #   
-#             
+#   
+
+dataSamplesMuOnia = [MuOniaAB,MuOniaC,MuOniaD]          
 dataSamplesMu=[DoubleMuAB,DoubleMuC,DoubleMuD]
 dataSamplesE=[DoubleElectronAB,DoubleElectronC,DoubleElectronD]
 dataSamplesMuE=[MuEGAB,MuEGC,MuEGD]
@@ -506,6 +538,11 @@ for comp in LMuTau:
     comp.splitFactor = 2
 
 for comp in dataSamplesMu:
+    comp.splitFactor = 800
+    comp.isMC = False
+    comp.isData = True
+
+for comp in dataSamplesMuOnia:
     comp.splitFactor = 800
     comp.isMC = False
     comp.isData = True

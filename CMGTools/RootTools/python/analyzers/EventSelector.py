@@ -38,7 +38,7 @@ class EventSelector( Analyzer ):
         run = iEvent.eventAuxiliary().id().run()
         lumi = iEvent.eventAuxiliary().id().luminosityBlock()
         eId = iEvent.eventAuxiliary().id().event()
-        if eId in self.cfg_ana.toSelect:
+        if eId in self.cfg_ana.toSelect or (run,lumi,eId) in self.cfg_ana.toSelect:
             # raise ValueError('found')
             print 'Selecting', run, lumi, eId
             return True 

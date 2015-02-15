@@ -191,7 +191,7 @@ ttHJetMETSkim = cfg.Analyzer(
 
 # Core sequence of all common modules
 susyCoreSequence = [
-    skimAnalyzer,
+   #skimAnalyzer,
    #eventSelector,
     jsonAna,
     triggerAna,

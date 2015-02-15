@@ -20,8 +20,13 @@ MODULES = []
 #from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"", "BestBySum4NoTJJb":"_bySum4"})) )
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","ByGuessLL2B":"_byLL"})) )
-from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
-MODULES.append( ('LepMVAFriend', LepMVAFriend("/afs/cern.ch/user/b/botta/CMGToolsGit/newRecipe/CMSSW_5_3_19/src/CMGTools/TTHAnalysis/macros/leptons")) )
+#from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
+#MODULES.append( ('LepMVAFriend', LepMVAFriend("/afs/cern.ch/user/b/botta/CMGToolsGit/newRecipe/CMSSW_5_3_19/src/CMGTools/TTHAnalysis/macros/leptons")) )
+from CMGTools.TTHAnalysis.tools.BphCandList import CandList4Mu
+MODULES.append( ('Kai', CandList4Mu("/afs/cern.ch/user/g/gpetrucc/scratch0/cmgprod/CMSSW_5_3_22/src/CMGTools/TTHAnalysis/python/plotter/MuOnia2012fourmuonsignal4Cristina.txt",
+                                  mtolerance=0.2,xyztolerance=0.0005)) )
+MODULES.append( ('Kai', CandList4Mu("/afs/cern.ch/user/g/gpetrucc/scratch0/cmgprod/CMSSW_5_3_22/src/CMGTools/TTHAnalysis/python/plotter/2012MuOniaforGiovanniTMOST.runlist",
+                                  mtolerance=0.2,xyztolerance=0.0005,vname="isKai12")) )
 
 class VariableProducer(Module):
     def __init__(self,name,booker,modules):
@@ -34,7 +39,7 @@ class VariableProducer(Module):
             for B in mod.listBranches():
                 # don't add the same branch twice
                 if B in self.branches: 
-                    print "Will not add branch %s twice" % B
+                    print "Will not add branch %s twice" % (B,)
                     continue
                 self.branches[B] = True
                 if type(B) == tuple:
