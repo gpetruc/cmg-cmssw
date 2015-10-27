@@ -20,6 +20,7 @@ class Electron( Lepton ):
         self._mvaTrigV0     = {True:None, False:None}
         self._mvaTrigNoIPV0 = {True:None, False:None}
         self._mvaRun2 = {}
+        self._vids = {}
 
     def electronID( self, id, vertex=None, rho=None ):
         if id is None or id == "": return True
@@ -43,6 +44,18 @@ class Electron( Lepton ):
             if ID.first == id:
                 return ID.second
         raise RuntimeError, "Electron id '%s' not yet implemented in Electron.py" % id
+
+    def electronVID( self, id, debug=False ):
+        if id is None or id == "": return True
+        if id not in self._vids or debug:
+            from PhysicsTools.Heppy.physicsutils.VIDWrapper import ElectronVID
+            selector = ElectronVID[id]
+            self._vids[id] = selector(self.physObj,self.event.input.events)
+            if debug:
+                cfr = selector.cutFlowResult()
+                for i in xrange(cfr.cutFlowSize()):
+                    print "\t%2d %-50s %7s %7s" % ( i, cfr.getNameAtIndex(i), cfr.getCutResultByIndex(i), cfr.isCutMasked(i) )
+        return self._vids[id]
 
     def cutBasedId(self, wp, showerShapes="auto"):
         if "_full5x5" in wp:
