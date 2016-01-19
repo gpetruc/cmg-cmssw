@@ -24,7 +24,7 @@ def _runIt(args):
         for drop in options.drop: mytree.SetBranchStatus(drop,0)
         for keep in options.keep: mytree.SetBranchStatus(keep,1)
         out = mytree.CopyTree(mycut)
-        npass = mytree.GetEntries()
+        npass = out.GetEntries()
         friends = out.GetListOfFriends() or []
         for tf in friends:
                 out.RemoveFriend(tf.GetTree())
