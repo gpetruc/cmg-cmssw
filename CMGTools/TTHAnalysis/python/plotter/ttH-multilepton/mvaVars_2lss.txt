@@ -2,11 +2,12 @@ lep2Pt:  LepGood2_pt       : 30,10,90; XTitle="Trailing lepton p_{T} [GeV]"
 lep2Eta: abs(LepGood2_eta) : 24,0,2.5; XTitle="Trailing lepton |#eta|",MoreY=1.4
 drl2j: mindr_lep2_jet  : 24,0,4; XTitle="min #DeltaR(l_{2}\,j)"
 mtW1: MT_met_lep1 : 30,0,200; XTitle="M_{T}(l_{1}\,E_{T}^{miss}) [GeV]",NXDiv=505
-htJet25: htJet25 : 30,0,1200; XTitle='H_{T} [GeV]',XNDiv=505
+htJet25: htJet25 : 20,200,1500; XTitle='H_{T} [GeV]',XNDiv=505
 mhtJet25: mhtJet25: 24,0,250 ; XTitle="H_{T}^{miss}  [GeV]"
-MVA_2LSS_4j_6var:  MVA_2LSS_4j_6var  : 12,-0.8,0.8 ; XTitle="BDT output", Legend='TL',MoreY=1.6
+#MVA_2LSS_4j_6var:  MVA_2LSS_4j_6var  : 12,-0.8,0.8 ; XTitle="BDT output", Legend='TL',MoreY=1.6
 #MVA_2LSS_4j_6var:  MVA_2LSS_4j_6var  : 12,-0.8,0.8 ; XTitle="BDT output", Legend='TL',MoreY=1.6, LegendCutoff=0.0001
 #nJet25 : nJet25 : [2.5,3.5,4.5,5.5,6.5,7.5] ; XTitle='N(jet\, p_{T} > 25)', XNDiv=505
+#nJet25 : nJet25 : [1.5,2.5,3.5,4.5,5.5,6.5,7.5] ; XTitle='N(jet\, p_{T} > 25)'
 #nJet25 : nJet25 : [2.5,3.5,4.5,5.5,6.5] ; XTitle='N(jet\, p_{T} > 25)', XNDiv=505
 #nJet25 : nJet25 : [3.5,4.5,5.5,6.5,7.5] ; XTitle='N(jet)', XNDiv=505, LegendCutoff=0.0001
 nJet25 : nJet25 : [3.5,4.5,5.5,6.5,7.5] ; XTitle='N(jet)', XNDiv=505
@@ -24,3 +25,46 @@ nJet25 : nJet25 : [3.5,4.5,5.5,6.5,7.5] ; XTitle='N(jet)', XNDiv=505
 #htll : LepGood1_pt+LepGood2_pt: 15,0,300; XTitle="p_{T}(ll) [GeV]"
 #nJet25_1F : nJet25+min(nJet25Fwd,1) : [3.5,4.5,5.5,6.5,7.5] ; XTitle='N(jet\,1f)', XNDiv=505, LegendCutoff=0.0001
 #MVA_MVA: min(max(MVA_2LSS_4j_6var,-0.79),0.79)\:min(max(min(LepGood1_mva,LepGood2_mva),-0.99),0.99) : 6,-1,1,12,-0.8,0.8; XTitle="Lepton MVA", YTitle="Kinematic BDT", UnbinnedData2D=True
+
+MVA_2LSS_3j_6var:  MVA_2LSS_23j_6var : 2000,-1,1 ; XTitle="BDT run1 23j 6v", Legend='TL',MoreY=1.6
+MVA_2LSS_3j_9var:  MVA_2LSS_23j_9var : 2000,-1,1 ; XTitle="BDT run1 23j 9v", Legend='TL',MoreY=1.6
+MVA_2LSS_4j_6var:  MVA_2LSS_4j_6var  : 2000,-1,1 ; XTitle="BDT run1 4j 6v",  Legend='TL',MoreY=1.6
+MVA_2LSS_4j_10var: MVA_2LSS_4j_10var : 2000,-1,1 ; XTitle="BDT run1 4j 10j", Legend='TL',MoreY=1.6
+K_htJet25: htJet25       : 2000,0,1000 ; Title="H_{T}(j25+l)", Legend='TL', MoreY=1.6
+K_LepGood2_pt: LepGood2_pt       : 2000,0,200 ; Title="l_{2} p_{T}", Legend='TL', MoreY=1.6
+K_nJet25: nJet25       :   [2.5,3.5,4.5,5.5,6.5,7.5,8.5,9.5,10.5] ; Title="n(Jet)", Legend='TL', MoreY=1.6, Discrete=True
+Nonw_BDTG: Nonw_BDTG       : 2000,-1,1 ; XTitle="BDTG Nonw 6v", Legend='TL', MoreY=1.6
+#Nonw_LD:   Nonw_LD         : 2000,0,1 ; XTitle="LD Nonw 6v",   Legend='TL', MoreY=1.6
+Nonw_Lik:  Nonw_Likelihood : 2000,0,1 ; XTitle="Lik. Nonw 6v", Legend='TL', MoreY=1.6
+MVAU_L_BDTG: MVAU_L_BDTG       : 2000,-1,1 ; XTitle="BDTG MVAU_L 6v", Legend='TL', MoreY=1.6
+#MVAU_L_LD:   MVAU_L_LD         : 2000,0,1 ; XTitle="LD MVAU_L 6v",   Legend='TL', MoreY=1.6
+MVAU_L_Lik:  MVAU_L_Likelihood : 2000,0,1 ; XTitle="Lik. MVAU_L 6v", Legend='TL', MoreY=1.6
+MVAP_L_BDTG: MVAP_L_BDTG       : 2000,-1,1 ; XTitle="BDTG MVAP_L 6v", Legend='TL', MoreY=1.6
+#MVAP_L_LD:   MVAP_L_LD         : 2000,0,1 ; XTitle="LD MVAP_L 6v",   Legend='TL', MoreY=1.6
+MVAP_L_Lik:  MVAP_L_Likelihood : 2000,0,1 ; XTitle="Lik. MVAP_L 6v", Legend='TL', MoreY=1.6
+
+2015:  (LepGood1_pt>25)*(LepGood2_pt>15) : 2,-0.5,1.5 ; Title="20/15"
+2015305:  (LepGood1_pt>25&&LepGood2_pt>15||LepGood1_pt>30) : 2,-0.5,1.5 ; Title="+ 30/5"
+2015_Pt_M:    (LepGood1_pt>25)*(LepGood2_pt>15)*(min(LepGood1_mvaSusyPHYS14withpt_v2,LepGood2_mvaSusyPHYS14withpt_v2)>0.65) : 2,-0.5,1.5 ; Title="20/15 Pt(M)"
+2015305_Pt_M: (LepGood1_pt>25&&LepGood2_pt>15||LepGood1_pt>30)*(min(LepGood1_mvaSusyPHYS14withpt_v2,LepGood2_mvaSusyPHYS14withpt_v2)>0.65)  : 2,-0.5,1.5 ; Title="+30/5 Pt(M)"
+2015305_PtW_M: (LepGood1_pt>25&&LepGood2_pt>15||LepGood1_pt>30)*(min(LepGood1_mvaSusyPHYS14withpt_v2_w05,LepGood2_mvaSusyPHYS14withpt_v2_w05)>0.4)  : 2,-0.5,1.5 ; Title="+30/5 PtW(M)"
+#2D_LepOLD_MVAOld: MVA_2LSS_4j_6var\:min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 100,-1,1,100,-1,1 : XTitle="2D old old"
+#2D_Pt_Nonw:  Nonw_BDTG\:min(LepGood1_mvaSusyPHYS14withpt_v2,LepGood2_mvaSusyPHYS14withpt_v2) : 100,-1,1,100,-1,1 ; Title="K Pt"
+#2D_Ptw_Nonw: Nonw_BDTG\:min(LepGood1_mvaSusyPHYS14withpt_v2_w05,LepGood2_mvaSusyPHYS14withpt_v2_w05) : 100,-1,1,100,-1,1 ; Title="K PtW"
+2D_Pt_Nonw_2015:  min(Nonw_BDTG,2*(LepGood1_pt>25)*(LepGood2_pt>15)-1)\:min(min(LepGood1_mvaSusyPHYS14withpt_v2,LepGood2_mvaSusyPHYS14withpt_v2),2*(LepGood1_pt>25&&LepGood2_pt>15)-1) : 100,-1.1,1.1,100,-1.1,1.1 ; Title="K Pt 20/15"
+#2D_Ptw_Nonw_2015: min(Nonw_BDTG,2*(LepGood1_pt>25)*(LepGood2_pt>15)-1)\:min(min(LepGood1_mvaSusyPHYS14withpt_v2_w05,LepGood2_mvaSusyPHYS14withpt_v2_w05),2*(LepGood1_pt>25&&LepGood2_pt>15)-1) : 100,-1,1,100,-1,1 ; Title="K PtW 20/15"
+2D_Pt_Nonw_2015305:  min(Nonw_BDTG,2*(LepGood1_pt>25&&LepGood2_pt>15||LepGood1_pt>30)-1)\:min(min(LepGood1_mvaSusyPHYS14withpt_v2,LepGood2_mvaSusyPHYS14withpt_v2),2*(LepGood1_pt>25&&LepGood2_pt>15||LepGood1_pt>30)-1) : 100,-1,1,100,-1,1 ; Title="K Pt + 30/5"
+2D_Ptw_Nonw_2015305: min(Nonw_BDTG,2*(LepGood1_pt>25&&LepGood2_pt>15||LepGood1_pt>30)-1)\:min(min(LepGood1_mvaSusyPHYS14withpt_v2_w05,LepGood2_mvaSusyPHYS14withpt_v2_w05),2*(LepGood1_pt>25&&LepGood2_pt>15||LepGood1_pt>30)-1)  : 100,-1,1,100,-1,1 ; Title="K PtW + 30/5"
+#2D_Pt_MVAU_L:  MVAU_L_BDTG\:min(LepGood1_mvaSusyPHYS14withpt_v2,LepGood2_mvaSusyPHYS14withpt_v2) : 100,-1,1,100,-1,1 ; Title="2D MVAU_L Pt"
+#2D_Ptw_MVAU_L: MVAU_L_BDTG\:min(LepGood1_mvaSusyPHYS14withpt_v2_w05,LepGood2_mvaSusyPHYS14withpt_v2_w05) : 100,-1,1,100,-1,1 ; Title="2D MVAU_L PtW"
+Pt:  min(LepGood1_mvaSusyPHYS14withpt_v2,LepGood2_mvaSusyPHYS14withpt_v2) : 1000,-1,1 ; Title="Pt"
+PtW: min(LepGood1_mvaSusyPHYS14withpt_v2_w05,LepGood2_mvaSusyPHYS14withpt_v2_w05) : 1000,-1,1 ; Title="PtW"
+
+LepMVA_Old:  min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 1000,-1,1 ; Title="Old LepMVA", LineColor=ROOT.kGray+2
+LepMVA_Old_T: min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.8:  2,-0.5,1.5;   Title="Old > 0.8", MarkerColor=ROOT.kBlack+0,  MarkerStyle=21, MarkerSize=1.3
+LepMVA_Old_M: min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.6:  2,-0.5,1.5;   Title="Old > 0.6", MarkerColor=ROOT.kGray+2,  MarkerStyle=21, MarkerSize=1.3
+LepMVA_Pt:  min(LepGood1_mvaSusyPHYS14withpt_v2,LepGood2_mvaSusyPHYS14withpt_v2) : 1000,-1,1 ; Title="Pt LepMVA", MarkerColor=ROOT.kBlue,
+LepMVA_Pt_M:  min(LepGood1_mvaSusyPHYS14withpt_v2,LepGood2_mvaSusyPHYS14withpt_v2) > 0.65: 1000,-1,1 ; Title="Pt > 0.65", MarkerColor=ROOT.kBlue,
+LepMVA_PtW: min(LepGood1_mvaSusyPHYS14withpt_v2_w05,LepGood2_mvaSusyPHYS14withpt_v2_w05) : 1000,-1,1 ; Title="PtW LepMVA", MarkerColor=ROOT.kGreen+2
+LepMVA_PtW_M: min(LepGood1_mvaSusyPHYS14withpt_v2_w05,LepGood2_mvaSusyPHYS14withpt_v2_w05) > 0.4: 1000,-1,1 ; Title="PtW > 0.4", MarkerColor=ROOT.kGreen+2
+

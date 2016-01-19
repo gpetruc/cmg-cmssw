@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from CMGTools.TTHAnalysis.treeReAnalyzer import *
 from glob import glob
-import os.path, re, types, itertools
+import os, os.path, re, types, itertools
 
 MODULES = []
 
@@ -97,15 +97,23 @@ MODULES.append ( ('leptonFakeRateFO4InSitu', lambda : ObjTagger('FO4InSitu','Lep
                 lambda lep : (lep.mvaIdPhys14 > 0.73+(0.57-0.73)*(abs(lep.eta)>0.8)+(+0.05-0.57)*(abs(lep.eta)>1.479) or abs(lep.pdgId)!=11),
                 lambda lep : lep.sip3d>=4,
             ]) ) )
+from CMGTools.TTHAnalysis.tools.topReco import GenWjj, WjjReco, WjjBestCandLikelihood, WjjBestCand
+MODULES.append( ('topRecoMC', lambda : GenWjj()) )
+MODULES.append( ('topReco', lambda : WjjReco()) )
+MODULES.append( ('topRecoBC', lambda : WjjBestCand(mva = WjjBestCandLikelihood("bestWjj","/afs/cern.ch/work/g/gpetrucc/CMSSW_7_4_7/src/CMGTools/TTHAnalysis/weights/bestWjj_Likelihood.weights.xml"), sortby = "mva")) )
+MODULES.append( ('topRecoBC', lambda : WjjBestCand(label = "ByMass")) )
+from CMGTools.TTHAnalysis.tools.vertexWeightFriend import VertexWeightFriend
+MODULES.append( ('vtxWeight50ns', lambda : VertexWeightFriend(
+    myfile = "/afs/cern.ch/user/g/gpetrucc/w/FRIENDS_74X_160815_MiniIso_mcJECv3_dataJECv4/0_vtxWeight_v1/zjets-4-nvtx_plots.root", myhist="nvtx_background",
+    targetfile = "/afs/cern.ch/user/g/gpetrucc/w/FRIENDS_74X_160815_MiniIso_mcJECv3_dataJECv4/0_vtxWeight_v1/zjets-4-nvtx_plots.root", targethist="nvtx_data")) )
 
 #from CMGTools.TTHAnalysis.tools.vertexWeightFriend import VertexWeightFriend
 #pufile="../path/to/nvtx/file.root"
-#MODULES.append ( ('puWeights', VertexWeightFriend(pufile,pufile,"nvtx_signal","nvtx_data",verbose=True) ) )
-
+#MODULES.append ( ('puWeights', lambda : VertexWeightFriend(pufile,pufile,"nvtx_signal","nvtx_data",verbose=True) ) )
 
 from CMGTools.TTHAnalysis.tools.objFloatCalc import ObjFloatCalc
 from CMGTools.TTHAnalysis.tools.friendLepAwareVars import *
-MODULES.append ( ('recalcLepAwareVars',ObjFloatCalc("recalcLepAwareVars","LepGood",{
+MODULES.append ( ('recalcLepAwareVars',lambda : ObjFloatCalc("recalcLepAwareVars","LepGood",{
                 "jetPtRatio_LepAwareJECv2_p0": (lambda lep : friendPtRatiov2(lep)),
                 "jetPtRelv2_p0": (lambda lep : friendPtRelv2(lep)),
                 "jetPtRatio_LepAwareJECv2_p1": (lambda lep : friendPtRatiov2(lep,1.01)),
@@ -132,8 +140,21 @@ MODULES.append ( ('recalcLepAwareVars',ObjFloatCalc("recalcLepAwareVars","LepGoo
 #                                     os.environ["CMSSW_BASE"]+"/src/CMGTools/TTHAnalysis/python/plotter/ttH-multilepton/train-MVA-Iso/weights/2015v2_%s_BDTG.weights.xml"),
 #                                    label="MultiIso2015v2")) )
 
-#from CMGTools.TTHAnalysis.tools.finalMVA_2lss import FinalMVA_2LSS
-#MODULES.append( ('2lss_mva', FinalMVA_2LSS()) )
+from CMGTools.TTHAnalysis.tools.finalMVA_2lss import FinalMVA_2LSS
+MODULES.append( ('2lss_mva', lambda : FinalMVA_2LSS()) )
+
+from CMGTools.TTHAnalysis.tools.finalMVA_2lss_2 import FinalMVA_2LSS_2
+P="/afs/cern.ch/work/g/gpetrucc/CMSSW_7_4_7/src/CMGTools/TTHAnalysis/macros/finalMVA/2lss/weights/"
+MODULES.append( ('2lss_mva', lambda : FinalMVA_2LSS_2("Nonw_BDTG", "old", "BDTG", P+"Nonw_BDTG.weights.xml", rarity=False)) )
+#MODULES.append( ('2lss_mva', lambda : FinalMVA_2LSS_2("MVAU_L_BDTG", "old", "BDTG", P+"MVAU_L_BDTG.weights.xml", rarity=False)) )
+#MODULES.append( ('2lss_mva', lambda : FinalMVA_2LSS_2("MVAP_L_BDTG", "old", "BDTG", P+"MVAP_L_BDTG.weights.xml", rarity=False)) )
+#MODULES.append( ('2lss_mva', lambda : FinalMVA_2LSS_2("Nonw_LD", "old", "LD", P+"Nonw_LD.weights.xml", rarity=True)) )
+#MODULES.append( ('2lss_mva', lambda : FinalMVA_2LSS_2("MVAU_L_LD", "old", "LD", P+"MVAU_L_LD.weights.xml", rarity=True)) )
+#MODULES.append( ('2lss_mva', lambda : FinalMVA_2LSS_2("MVAP_L_LD", "old", "LD", P+"MVAP_L_LD.weights.xml", rarity=True)) )
+#MODULES.append( ('2lss_mva', lambda : FinalMVA_2LSS_2("Nonw_Likelihood", "old", "Likelihood", P+"Nonw_Likelihood.weights.xml", rarity=False)) )
+#MODULES.append( ('2lss_mva', lambda : FinalMVA_2LSS_2("MVAU_L_Likelihood", "old", "Likelihood", P+"MVAU_L_Likelihood.weights.xml", rarity=False)) )
+#MODULES.append( ('2lss_mva', lambda : FinalMVA_2LSS_2("MVAP_L_Likelihood", "old", "Likelihood", P+"MVAP_L_Likelihood.weights.xml", rarity=False)) )
+ 
 #from CMGTools.TTHAnalysis.tools.finalMVA_3l import FinalMVA_3L
 #MODULES.append( ('3l_mva', FinalMVA_3L()) )
 #from CMGTools.TTHAnalysis.tools.bbvars import bbVars
@@ -149,9 +170,40 @@ MODULES.append ( ('recalcLepAwareVars',ObjFloatCalc("recalcLepAwareVars","LepGoo
 #MODULES.append( ('MuMVAId', MuonMVAFriend("BPH",     "/afs/cern.ch/work/g/gpetrucc/TREES_70X_240914/0_muMVAId_v1/train70XBPH_BDTG.weights.xml", label="BPH")) )
 #MODULES.append( ('MuMVAId', MuonMVAFriend("BPHCalo", "/afs/cern.ch/work/g/gpetrucc/TREES_70X_240914/0_muMVAId_v1/train70XBPHCalo_BDTG.weights.xml", label="BPHCalo")) )
 #MODULES.append( ('MuMVAId', MuonMVAFriend("Full",    "/afs/cern.ch/work/g/gpetrucc/TREES_70X_240914/0_muMVAId_v1/train70XFull_BDTG.weights.xml", label="Full")) )
-#from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
+from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
 #MODULES.append( ('LepMVAFriend', LepMVAFriend(("/afs/cern.ch/user/g/gpetrucc/w/TREES_72X_171214/0_lepMVA_v1/%s_BDTG.weights.xml",
 #                                               "/afs/cern.ch/user/g/gpetrucc/w/TREES_72X_171214/0_lepMVA_v1/%s_BDTG.weights.xml"))) )
+#MODULES.append( ('LepMVAFriend', lambda : LepMVAFriend(("/afs/cern.ch/work/g/gpetrucc/CMSSW_7_4_7/src/CMGTools/TTHAnalysis/macros/leptons/weights/%s_v2_BDTG.weights.xml",
+#                                                        "/afs/cern.ch/work/g/gpetrucc/CMSSW_7_4_7/src/CMGTools/TTHAnalysis/macros/leptons/weights/%s_v2_BDTG.weights.xml",),
+#                                                       training="v2", label="v2")) )
+#MODULES.append( ('LepMVAFriend', lambda : LepMVAFriend(("/afs/cern.ch/work/g/gpetrucc/CMSSW_7_4_7/src/CMGTools/TTHAnalysis/macros/leptons/weights/%s_withpt_BDTG.weights.xml",
+#                                                        "/afs/cern.ch/work/g/gpetrucc/CMSSW_7_4_7/src/CMGTools/TTHAnalysis/macros/leptons/weights/%s_withpt_BDTG.weights.xml",),
+#                                                       training="withpt", label="withpt")) )
+MODULES.append( ('LepMVAFriend', lambda : LepMVAFriend(("/afs/cern.ch/work/g/gpetrucc/CMSSW_7_4_7/src/CMGTools/TTHAnalysis/macros/leptons/weights/%s_withpt_v2_BDTG.weights.xml",
+                                                        "/afs/cern.ch/work/g/gpetrucc/CMSSW_7_4_7/src/CMGTools/TTHAnalysis/macros/leptons/weights/%s_withpt_v2_BDTG.weights.xml",),
+                                                       training="WithPtV2_oldTrees", label="TTHPt")) )
+#MODULES.append( ('LepMVAFriend', lambda : LepMVAFriend(("/afs/cern.ch/work/g/gpetrucc/CMSSW_7_4_7/src/CMGTools/TTHAnalysis/macros/leptons/weights/%s_withpt_v2_w05_BDTG.weights.xml",
+#                                                        "/afs/cern.ch/work/g/gpetrucc/CMSSW_7_4_7/src/CMGTools/TTHAnalysis/macros/leptons/weights/%s_withpt_v2_w05_BDTG.weights.xml",),
+#                                                        training="withpt_v2", label="TTHPtW")) )
+
+from CMGTools.TTHAnalysis.tools.nSVFriend import nSVFriend, IVF_PRESEL
+MODULES.append( ('nSV', lambda : nSVFriend(label="Loose",  sel = IVF_PRESEL) ) )
+MODULES.append( ('nSV', lambda : nSVFriend(label="Medium", sel = lambda sv : IVF_PRESEL(sv) and sv.ntracks >= 3) ) )
+MODULES.append( ('nSV', lambda : nSVFriend(label="Tight",  sel = lambda sv : IVF_PRESEL(sv) and sv.ntracks >= 3 and sv.mass > 1.5 and sv.sip3d > 10) ) )
+MODULES.append( ('nSV', lambda : nSVFriend(label="MVALoose",  sel = lambda sv : IVF_PRESEL(sv) and sv.mva >= 0.3) ) )
+MODULES.append( ('nSV', lambda : nSVFriend(label="MVAMedium", sel = lambda sv : IVF_PRESEL(sv) and sv.mva >= 0.7) ) )
+MODULES.append( ('nSV', lambda : nSVFriend(label="MVATight",  sel = lambda sv : IVF_PRESEL(sv) and sv.mva >= 0.9) ) )
+
+
+from CMGTools.TTHAnalysis.tools.btagRWTs_ND import BTagReweightFriend, BTagLeptonReweightFriend, BTagReweight74X
+from CMGTools.TTHAnalysis.tools.btagRemap import BTagMyReweightFriend, BTagMyLepReweightFriend, BTagRemapFriend, BTagRemap74X
+MODULES.append( ( 'btagJWT', lambda : BTagReweightFriend(BTagReweight74X) ) )
+MODULES.append( ( 'btagLWT', lambda : BTagLeptonReweightFriend(BTagReweight74X) ) )
+#MODULES.append( ( 'btagGio', lambda : BTagRemapFriend(BTagRemap74X) ) )
+MODULES.append( ( 'btagGio', lambda : BTagMyReweightFriend(BTagRemap74X) ) )
+MODULES.append( ( 'btagGio', lambda : BTagMyLepReweightFriend(BTagRemap74X) ) )
+MODULES.append( ( 'btagGio', lambda : BTagMyReweightFriend(BTagRemap74X, spline=False, outlabel="btagCSVMyWH") ) )
+MODULES.append( ( 'btagGio', lambda : BTagMyLepReweightFriend(BTagRemap74X, spline=False,outlabel="jetBTagCSVMyH") ) )
 #MODULES.append( ('LepMVAFriend', LepMVAFriend(("/afs/cern.ch/work/g/gpetrucc/TREES_70X_240914/0_lepMVA_v1/SV_%s_BDTG.weights.xml",
 #                                               "/afs/cern.ch/work/g/gpetrucc/TREES_70X_240914/0_lepMVA_v1/SV_%s_BDTG.weights.xml",),
 #                                               training="muMVAId_SV", label="SV")) )
@@ -198,7 +250,7 @@ parser.add_option("-m", "--modules", dest="modules",  type="string", default=[],
 parser.add_option("-d", "--dataset", dest="datasets",  type="string", default=[], action="append", help="Process only this dataset (or dataset if specified multiple times)");
 parser.add_option("-D", "--dm", "--dataset-match", dest="datasetMatches",  type="string", default=[], action="append", help="Process only this dataset (or dataset if specified multiple times): REGEXP");
 parser.add_option("-c", "--chunk",   dest="chunks",    type="int",    default=[], action="append", help="Process only these chunks (works only if a single dataset is selected with -d)");
-parser.add_option("-N", "--events",  dest="chunkSize", type="int",    default=500000, help="Default chunk size when splitting trees");
+parser.add_option("-N", "--events",  dest="chunkSize", type="int",    default=250000, help="Default chunk size when splitting trees");
 parser.add_option("-j", "--jobs",    dest="jobs",      type="int",    default=1, help="Use N threads");
 parser.add_option("-p", "--pretend", dest="pretend",   action="store_true", default=False, help="Don't run anything");
 parser.add_option("-T", "--tree-dir",   dest="treeDir",     type="string", default="sf", help="Directory of the friend tree in the file (default: 'sf')");
@@ -210,7 +262,18 @@ parser.add_option("--FMC", "--add-friend-mc",    dest="friendTreesMC",  action="
 parser.add_option("--FD", "--add-friend-data",    dest="friendTreesData",  action="append", default=[], nargs=2, help="Add a friend tree (treename, filename) to data trees only. Can use {name}, {cname} patterns in the treename") 
 parser.add_option("-L", "--list-modules",  dest="listModules", action="store_true", default=False, help="just list the configured modules");
 parser.add_option("-n", "--new",  dest="newOnly", action="store_true", default=False, help="Make only missing trees");
+parser.add_option("-I", "--import", dest="imports",  type="string", default=[], action="append", help="Modules to import");
 (options, args) = parser.parse_args()
+
+if options.imports:
+    MODULES = []
+    from importlib import import_module
+    for mod in options.imports:
+        import_module(mod)
+        obj = sys.modules[mod]
+        for (name,x) in obj.MODULES:
+            print "Loaded %s from %s " % (name, mod)
+            MODULES.append((name,x))
 
 if options.listModules:
     print "List of modules"
@@ -236,10 +299,16 @@ jobs = []
 for D in glob(args[0]+"/*"):
     treename = options.tree
     fname    = "%s/%s/%s_tree.root" % (D,options.tree,options.tree)
-    if (not os.path.exists(fname)) and os.path.exists("%s/%s/tree.root" % (D,options.tree)):
+    if (not os.path.exists(fname)) and (os.path.exists("%s/%s/tree.root" % (D,options.tree)) ):
         treename = "tree"
         fname    = "%s/%s/tree.root" % (D,options.tree)
-    if os.path.exists(fname):
+
+    if (not os.path.exists(fname)) and (os.path.exists("%s/%s/tree.root.url" % (D,options.tree)) ):
+        treename = "tree"
+        fname    = "%s/%s/tree.root" % (D,options.tree)
+        fname    = open(fname+".url","r").readline().strip()
+
+    if os.path.exists(fname) or (os.path.exists("%s/%s/tree.root.url" % (D,options.tree))):
         short = os.path.basename(D)
         if options.datasets != []:
             if short not in options.datasets: continue
@@ -305,13 +374,42 @@ maintimer = ROOT.TStopwatch()
 def _runIt(myargs):
     (name,fin,fout,data,range,chunk) = myargs
     timer = ROOT.TStopwatch()
-    fb = ROOT.TFile(fin)
+    if 'LSB_JOBID' in os.environ or 'LSF_JOBID' in os.environ:
+        if fin.startswith("root://"):
+            try:
+                tmpdir = os.environ['TMPDIR'] if 'TMPDIR' in os.environ else "/tmp"
+                tmpfile =  "%s/%s" % (tmpdir, os.path.basename(fin))
+                print "xrdcp %s %s" % (fin, tmpfile)
+                os.system("xrdcp %s %s" % (fin, tmpfile))
+                if os.path.exists(tmpfile):
+                    fin = tmpfile 
+                    print "success :-)"
+            except:
+                pass
+        fb = ROOT.TFile.Open(fin)
+    elif "root://" in fin:        
+        ROOT.gEnv.SetValue("TFile.AsyncReading", 1);
+        ROOT.gEnv.SetValue("XNet.Debug", 0); # suppress output about opening connections
+        ROOT.gEnv.SetValue("XrdClientDebug.kUSERDEBUG", 0); # suppress output about opening connections
+        fb   = ROOT.TXNetFile(fin+"?readaheadsz=65535&DebugLevel=0")
+        os.environ["XRD_DEBUGLEVEL"]="0"
+        os.environ["XRD_DebugLevel"]="0"
+        os.environ["DEBUGLEVEL"]="0"
+        os.environ["DebugLevel"]="0"
+    else:
+        fb = ROOT.TFile.Open(fin)
+        print fb
+
+    print "getting tree.."
+
     tb = fb.Get(options.tree)
+
     if not tb: tb = fb.Get("tree") # new trees
     if options.vectorTree:
         tb.vectorTree = True
     else:
         tb.vectorTree = False
+
     friends = options.friendTrees[:]
     friends += (options.friendTreesData if data else options.friendTreesMC)
     friends_ = [] # to make sure pyroot does not delete them

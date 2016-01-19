@@ -1,0 +1,6 @@
+1lep : (HLT_SingleMu50ns && abs(LepGood1_pdgId)==13 && LepGood1_pt > 20 || HLT_SingleEl50ns && abs(LepGood1_pdgId) == 11 && LepGood1_pt > 30) \
+         && abs(LepGood1_eta) < 2.1 && LepGood1_miniRelIso < 0.2
+3j: nJet25 >= 3
+Wjj_mass: 40 < Wjj_mass && Wjj_mass < 130
+Wjj_maxBtag: max(Jet_btagCSV[Wjj_ij1],Jet_btagCSV[Wjj_ij2]) < 0.890
+Wjj_minBtag: min(Jet_btagCSV[Wjj_ij1],Jet_btagCSV[Wjj_ij2]) < 0.890

@@ -1,0 +1,55 @@
+lep1Pt:  LepGood1_pt: 40,0,200; XTitle="Leading lepton p_{T}  [GeV]", Legend='TR'
+lep2Pt:  LepGood2_pt: 40,0,100; XTitle="Subleading lepton p_{T}  [GeV]", Legend='TR'
+lep3Pt:  LepGood3_pt: 40,0,50; XTitle="Third lepton p_{T}  [GeV]", Legend='TR'
+#lep4Pt:  LepGood4_pt: 40,0,50; XTitle="Fourth lepton p_{T}  [GeV]", Legend='TR'
+lep1Eta:  abs(LepGood1_eta): 20,0,2.5; XTitle="Leading lepton |#eta|", Legend='TR'
+lep2Eta:  abs(LepGood2_eta): 20,0,2.5; XTitle="Subleading lepton |#eta|", Legend='TR'
+lep3Eta:  abs(LepGood3_eta): 20,0,2.5; XTitle="Third lepton |#eta|", Legend='TR'
+
+m2l: m2l: 60,0,180 ; XTitle="m(2l)  [GeV]", Legend='TR'
+m3l: m3l: 60,0,180 ; XTitle="m(3l)  [GeV]", Legend='TR'
+
+m_sfos: if3(LepGood1_pdgId+LepGood2_pdgId == 0, \
+          mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), \
+          if3(LepGood1_pdgId+LepGood3_pdgId == 0,  \
+              mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass), \
+              mass_2( LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) \
+        ) : 40,0,180 ; XTitle="m(ll\, SFOS)  [GeV]", Legend='TR', IncludeOverflows=False
+m_sfos_r1: if3(LepGood1_pdgId+LepGood2_pdgId == 0, \
+          mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), \
+          if3(LepGood1_pdgId+LepGood3_pdgId == 0,  \
+              mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass), \
+              mass_2( LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) \
+        )  : 30,0,30 ; XTitle="m(ll\, SFOS)  [GeV]", Legend='TR', IncludeOverflows=False
+m_sfos_r1b: if3(LepGood1_pdgId+LepGood2_pdgId == 0, \
+          mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), \
+          if3(LepGood1_pdgId+LepGood3_pdgId == 0,  \
+              mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass), \
+              mass_2( LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) \
+        )  : 30,0,30 ; XTitle="m(ll\, SFOS)  [GeV]", Legend='TR', IncludeOverflows=False
+m_sfos_r1c: if3(LepGood1_pdgId+LepGood2_pdgId == 0, \
+          mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), \
+          if3(LepGood1_pdgId+LepGood3_pdgId == 0,  \
+              mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass), \
+              mass_2( LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) \
+        )  : 7,5,20 ; XTitle="m(ll\, SFOS)  [GeV]", Legend='TR', IncludeOverflows=False
+m_sfos_r2: if3(LepGood1_pdgId+LepGood2_pdgId == 0, \
+          mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), \
+          if3(LepGood1_pdgId+LepGood3_pdgId == 0,  \
+              mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass), \
+              mass_2( LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) \
+        ) : 60,60,120 ; XTitle="m(ll\, SFOS)  [GeV]", Legend='TR', IncludeOverflows=False
+
+
+minM3: min(   mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), min( \
+              mass_2( LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass), \
+              mass_2( LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass, LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) \
+          ) : 15,0,30 ; XTitle="m(ll\, SFOS)  [GeV]", Legend='TR', IncludeOverflows=False
+
+met: met: 15,0,300; XTitle="E_{T}^{miss}  [GeV]"
+nJet25 : nJet25 : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5] ; XTitle='N(jet\, p_{T} > 25)'
+nJet40 : nJet40 : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5] ; XTitle='N(jet\, p_{T} > 40)'
+nBJet25: nBJetLoose25 : [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle='N(jet\, p_{T} > 25\, btag)',XNDiv=505
+nBJet40: nBJetLoose40 : [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle='N(jet\, p_{T} > 40\, btag)',XNDiv=505
+
+

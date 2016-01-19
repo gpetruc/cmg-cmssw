@@ -1,0 +1,15 @@
+# vim: syntax=sh
+HLT : HLT_DoubleEl || HLT_DoubleMu || HLT_MuEG
+>= 2 good leptons: nLepGood >= 2
+minMll12: minMllAFAS > 12
+lep1_pt20: LepGood1_pt > 20
+lep2_pt15: LepGood2_pt > 15 
+ele cuts: (abs(LepGood1_pdgId) == 13 || (LepGood1_convVeto && LepGood1_lostHits == 0) ) && \
+          (abs(LepGood2_pdgId) == 13 || (LepGood2_convVeto && LepGood2_lostHits == 0) ) 
+mu cuts:  LepGood1_mediumMuonId > 0  && LepGood2_mediumMuonId > 0 && LepGood3_mediumMuonId > 0 
+sip8: max(LepGood1_sip3d,LepGood2_sip3d) < 8
+z1 : mZ1 > 60 && mZ1 < 120
+lepMVA12_max: max(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.65
+lepMVA12_min: min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.65
+muon: abs(LepGood1_pdgId) == 13; Disable=True
+smpjson : run <= 258750 && run != 256729 && run != 256734 && run != 257394 && run != 257395 && run != 257396 && run != 257397 && run != 257399 && run != 257400 && run != 257487 && run != 257490 && run != 257822 && run != 257823 && run != 258443; Disable=True

@@ -1,0 +1,25 @@
+mvaTTH: LepGood_mvaTTH:  2000,-1.1,1.1;   Title="ttH MVA old", LineColor=ROOT.kAzure+1
+mvaTTH_T: LepGood_mvaTTH > 0.65:  2,-0.5,1.5;   Title="Old 0.65", MarkerColor=ROOT.kAzure+2,  MarkerStyle=21, MarkerSize=1.8
+mvaTTH_M: LepGood_mvaTTH > 0.40:  2,-0.5,1.5;   Title="Old 0.40", MarkerColor=ROOT.kAzure+1,  MarkerStyle=21, MarkerSize=1.3
+#mvaTTH_L: LepGood_mvaTTH > 0.00:  2,-0.5,1.5;   Title="WP 0.00", MarkerColor=ROOT.kAzure+10,  MarkerStyle=21, MarkerSize=1.3
+mvaTTHMoriond16: LepGood_mvaTTHMoriond16:  2000,-1.1,1.1;   Title="ttH MVA", LineColor=ROOT.kViolet+1
+mvaTTHMoriond16_T: LepGood_mvaTTHMoriond16 > 0.60:  2,-0.5,1.5;   Title="WP 0.60", MarkerColor=ROOT.kViolet+2,  MarkerStyle=21, MarkerSize=1.8
+mvaTTHMoriond16_M: LepGood_mvaTTHMoriond16 > 0.30:  2,-0.5,1.5;   Title="WP 0.30", MarkerColor=ROOT.kViolet+1,  MarkerStyle=21, MarkerSize=1.3
+#mvaTTHMoriond16_L: LepGood_mvaTTHMoriond16 > 0.00:  2,-0.5,1.5;   Title="Loose WP", MarkerColor=ROOT.kViolet+3,  MarkerStyle=21, MarkerSize=1.3
+hzz: LepGood_relIso04 < 0.4 && LepGood_sip3d < 4 : 2,-0.5,1.5;   Title="H#rightarrowZZ#rightarrow4l", MarkerColor=ROOT.kRed
+miniRelIso:  LepGood_miniRelIso: 2000,0,0.4; Title="miniIso", Legend='TR', LineColor=ROOT.kGreen+2
+multiIso:  LepGood_miniRelIso < (0.12+0.04*(abs(LepGood_pdgId)==13)) && \
+           (LepGood_jetPtRatiov2 > 0.80-0.04*(abs(LepGood_pdgId)==13) || \
+            LepGood_jetPtRelv2 > 7.2) && \ 
+            LepGood_pt > 10 && \
+            LepGood_sip3d < 4 && \
+            LepGood_mediumMuonId > 0  && \
+           ( LepGood_mvaIdSpring15 >=0.87+(0.60-0.87)*(abs(LepGood_eta)>0.8)+(+0.17-0.60)*(abs(LepGood_eta)>1.479) || abs(LepGood_pdgId) == 13) \
+            : 2,-0.5,1.5; Title="SUS-15-008", Legend='TR', MarkerColor=ROOT.kOrange-3
+
+sip3d:  LepGood_sip3d: 2000,0,8; XTitle="lepton miniIso/p_{T} ", Legend='TR'
+jetBTag:  max(LepGood_jetBTagCSV,0):   2000,0,1;  XTitle="lepton's jet b-tag disc.", Legend='TL', MoreY=1.45
+jetPtF:   min(LepGood_jetPtRatio,1.5): 2000,0,1.2; XTitle="lepton p_{T}(l)/p_{T}(jet)", Legend='TL'
+jetPtFv2:   min(LepGood_jetPtRatio_LepAwareJECv2,1.5): 2000,0,1.2; XTitle="lepton p_{T}(l)/p_{T}(jet)\, v2", Legend='TL'
+jetPtRel:   LepGood_jetPtRel: 2000,0,12; XTitle="lepton p_{T}^{rel}(l) wrt jet\, v1", Legend='TR'
+jetPtRelv2: LepGood_jetPtRelv2: 2000,0,20; XTitle="lepton p_{T}^{rel}(l) wrt jet\, v2", Legend='TL'

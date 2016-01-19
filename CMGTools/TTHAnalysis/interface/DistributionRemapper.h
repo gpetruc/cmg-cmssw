@@ -8,15 +8,17 @@ struct TH1;
 class DistributionRemapper {
     public:
         DistributionRemapper() : interp_(0) {} // for persistency
-        DistributionRemapper(const TH1 *source, const TH1 *target) ;
+        DistributionRemapper(const TH1 *source, const TH1 *target, bool bouned=true, bool twoWay=false, bool spline=true, bool debug=false) ;
         ~DistributionRemapper() ;
         double operator()(double x) const { return Eval(x); }
         double Eval(double x) const ;
     private:
         void init() const;
+        static void makeCdf(std::vector<double> &xt, std::vector<double> &yt, const TH1* target, bool bounded) ;
 
         double xmin_, ymin_, xmax_, ymax_;
         std::vector<double> x_, y_;
+        bool linear_;
         mutable ROOT::Math::Interpolator *interp_;  //! not to be serialized    
 };
 

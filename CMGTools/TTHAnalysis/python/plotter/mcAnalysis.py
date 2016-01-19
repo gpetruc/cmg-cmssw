@@ -120,11 +120,17 @@ class MCAnalysis:
                 pckobj  = pickle.load(open(pckfile,'r'))
                 counters = dict(pckobj)
                 if ('Sum Weights' in counters) and options.weight:
-                    nevt = counters['Sum Weights']
-                    scale = "genWeight*%s/%g" % (field[2], 0.001*nevt)
+                    if options.noLXS:
+                        scale = "(abs(genWeight)/genWeight)*%s" % (field[2].replace("xsec","1"))
+                    else:
+                        nevt = counters['Sum Weights']
+                        scale = "genWeight*%s/%g" % (field[2], 0.001*nevt)
                 else:
-                    nevt = counters['All Events']
-                    scale = "%s/%g" % (field[2], 0.001*nevt)
+                    if options.noLXS:
+                        scale = field[2].replace("xsec","1")
+                    else:
+                        nevt = counters['All Events']
+                        scale = "%s/%g" % (field[2], 0.001*nevt)
                 if len(field) == 4: scale += "*("+field[3]+")"
                 for p0,s in options.processesToScale:
                     for p in p0.split(","):
@@ -335,6 +341,24 @@ class MCAnalysis:
                     if self._options.weight and nev < 1000: print ( nfmtS if nev > 0.2 else nfmtX) % toPrint,
                     else                                  : print nfmtL % toPrint,
                 print ""
+        elif self._options.txtfmt in ("tsv","csv","dsv","ssv"):
+            sep = { 'tsv':"\t", 'csv':",", 'dsv':';', 'ssv':' ' }[self._options.txtfmt]
+            if len(table[0][1]) == 1:
+                for k,r in table:
+                    if sep in k:
+                        if self._options.txtfmt in ("tsv","ssv"):
+                            k = k.replace(sep,"_")
+                        else:
+                            k = '"'+k.replace('"','""')+'"'
+                    (nev,err,fraction) = r[0][1][0], r[0][1][1], 1.0
+                    toPrint = (nev,)
+                    if self._options.errors:    toPrint+=(err,)
+                    if self._options.fractions: toPrint+=(fraction*100,)
+                    if self._options.weight and nev < 1000: ytxt = ( nfmtS if nev > 0.2 else nfmtX) % toPrint
+                    else                                  : ytxt = nfmtL % toPrint
+                    print "%s%s%s" % (k,sep,sep.join(ytxt.split()))
+                print ""
+
     def _getYields(self,ttylist,cuts):
         return mergeReports([tty.getYields(cuts) for tty in ttylist])
     def __str__(self):

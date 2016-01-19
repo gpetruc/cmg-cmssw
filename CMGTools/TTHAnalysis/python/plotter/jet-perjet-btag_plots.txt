@@ -1,0 +1,4 @@
+ptAEta : Jet_pt\:abs(Jet_eta) : [0,1.0,1.5,2.0,2.4]*[25,30,35,45,55,70,85,100,120,150,200,250,300,400,600]; YTitle="p_{T} [GeV]", XTitle="|#eta|", Logy, PlotMode="COLZ TEXT00"
+CSVL_vs_ptAEta : Jet_btagCSV>0.605\:Jet_pt\:abs(Jet_eta) : [0,1.0,1.5,2.0,2.4]*[25,30,35,45,55,70,85,100,120,150,200,350,600]; YTitle="p_{T} [GeV]", XTitle="|#eta|", Logy, Profile2D=True, PlotMode="COLZ E TEXT00", PaintTextFormat=".3f", MarkerSize=1.0
+CSVM_vs_ptAEta : Jet_btagCSV>0.890\:Jet_pt\:abs(Jet_eta) : [0,1.0,1.5,2.0,2.4]*[25,30,35,45,55,70,85,100,120,150,200,350,600]; YTitle="p_{T} [GeV]", XTitle="|#eta|", Logy, Profile2D=True, PlotMode="COLZ E TEXT00", PaintTextFormat=".3f", MarkerSize=1.0
+CSVT_vs_ptAEta : Jet_btagCSV>0.970\:Jet_pt\:abs(Jet_eta) : [0,1.0,1.5,2.0,2.4]*[25,30,35,45,55,70,85,100,120,150,200,350,600]; YTitle="p_{T} [GeV]", XTitle="|#eta|", Logy, Profile2D=True, PlotMode="COLZ E TEXT00", PaintTextFormat=".3f", MarkerSize=1.0

@@ -1,26 +1,65 @@
-met:   met: 15,0,300    ; XTitle="E_{T}^{miss}  [GeV]"
-metLD: met*0.00397 + mhtJet25*0.00265 : 15,-0.1,1.4 ; XTitle="E_{T}^{miss} LD"
-minmll:   minMllAFAS: 20,0,200 ; XTitle="min m(ll)  [GeV]", Legend='TR'
-minmllOS:   minMllAFOS: 20,0,200 ; XTitle="min m(ll)  [GeV]", Legend='TR'
-#minmll_zoom:   minMllAFAS: 25,0,50 ; XTitle="min m(ll)  [GeV]", Legend='TR'
-#minmllOS_zoom:   minMllAFOS: 25,0,50 ; XTitle="min m(ll)  [GeV]", Legend='TR'
-m3l: m3l : 15,0,400; XTitle="m(l_{1}\,l_{2}\,l_{3}) [GeV]"
-ht3l: ht3l : 20,0,400; XTitle="p_{T}(l_{1})+p_{T}(l_{2})+p_{T}(l_{3}) [GeV]"
-lep1Pt:  LepGood1_pt: 10,0,200; XTitle="Leading lepton p_{T}  [GeV]", Legend='TR'
-lep2Pt:  LepGood2_pt: 10,0,100; XTitle="Subleading lepton p_{T}  [GeV]", Legend='TR'
-lep3Pt:  LepGood3_pt: 10,0,50; XTitle="Trailing lepton p_{T}  [GeV]", Legend='TR'
-lep1Eta:  abs(LepGood1_eta): 10,0,2.5; XTitle="Leading lepton |#eta|", Legend='TR'
-lep2Eta:  abs(LepGood2_eta): 10,0,2.5; XTitle="Subleading lepton |#eta|", Legend='TR'
-lep2Code:  (abs(LepGood2_pdgId) - 11) + (abs(LepGood2_eta)>1.5): [-0.5,0.5,1.5,2.5,3.5]; XTitle="Subleading lepton type: eB/eE/#muB/#muE", Legend='TR',NXDiv=404
-lep3Eta:  abs(LepGood3_eta): 10,0,2.5; XTitle="Trailing lepton |#eta|", Legend='TR'
-lep3Code:  (abs(LepGood3_pdgId) - 11) + (abs(LepGood3_eta)>1.5): [-0.5,0.5,1.5,2.5,3.5]; XTitle="Trailing lepton type: eB/eE/#muB/#muE", Legend='TR',NXDiv=404
-nJet25 : nJet25 : 8,-0.5,7.5 ; XTitle='N(jet\, p_{T} > 25)'
-nBJetLoose25 : nBJetLoose25 : 5,-0.5,4.5 ; XTitle='N(jet\, p_{T} > 25\, CVS Loose)',XNDiv=505
-nBJetMedium25 : nBJetMedium25 : 5,-0.5,4.5 ; XTitle='N(jet\, p_{T} > 25\, CVS Medium)',XNDiv=505
-nvtx: nVert: 30,0.5,40.5 ; XTitle="N(vertices)", Legend='TR'
-max_muon_sip: max( max((abs(LepGood1_pdgId)==13)*LepGood1_sip3d,(abs(LepGood2_pdgId)==13)*LepGood2_sip3d ), \
-                 (abs(LepGood3_pdgId)==13)*LepGood3_sip3d ) :  24,0.0,10. ; XTitle="Worst muon S_{IP3D}", Legend="TR"
-max_muon_dxy: max( max((abs(LepGood1_pdgId)==13)*abs(LepGood1_dxy),(abs(LepGood2_pdgId)==13)*abs(LepGood2_dxy) ), \
-                 (abs(LepGood3_pdgId)==13)*abs(LepGood3_dxy) )*10000: 24,0.0,100. ; XTitle="Worst muon d_{xy} [#mum]", Legend="TR"
-max_muon_dz: max( max((abs(LepGood1_pdgId)==13)*abs(LepGood1_dz),(abs(LepGood2_pdgId)==13)*abs(LepGood2_dz) ), \
-                 (abs(LepGood3_pdgId)==13)*abs(LepGood3_dz) )*10000:  24,0.0,600. ; XTitle="Worst muon d_{z} [#mum]", Legend="TR"
+# vim: syntax=sh
+* ; LegendCutoff=1e-3
+minmll:   minMllAFAS: 30,0,150 ; XTitle="min m(ll)  [GeV]", Legend='TR'
+minmllOS:   minMllAFOS: 30,0,150 ; XTitle="min m(ll)  [GeV]", Legend='TR'
+m3l: m3l : 40,0,400; XTitle="m(l_{1}\,l_{2}\,l_{3}) [GeV]"
+ht3l: ht3l : 30,0,300; XTitle="p_{T}(l_{1})+p_{T}(l_{2})+p_{T}(l_{3}) [GeV]"
+
+lepMVA12: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 40,0.6,1; XTitle="Lepton MVA(l_{1}\,l_{2})",Legend='TL'
+lepMVA123_f: min(LepGood1_mvaTTH,min(LepGood2_mvaTTH,LepGood3_mvaTTH)) : 40,-1,1; XTitle="Lepton MVA(l_{1}\,l_{2}\,l_{3})",Legend='TR'
+lepMVA123_z: min(LepGood1_mvaTTH,min(LepGood2_mvaTTH,LepGood3_mvaTTH)) : 40,0,1; XTitle="Lepton MVA(l_{1}\,l_{2}\,l_{3})",Legend='TR'
+lepMVA123_p: min(LepGood1_mvaTTH,min(LepGood2_mvaTTH,LepGood3_mvaTTH)) : 12,0.65,1; XTitle="Lepton MVA(l_{1}\,l_{2}\,l_{3})",Legend='TL'
+lepMVA3_f: LepGood3_mvaTTH : 40,-1,1; XTitle="Lepton MVA(l_{3})",Legend='TR'
+lepMVA3_z: LepGood3_mvaTTH : 40,0,1; XTitle="Lepton MVA(l_{3})",Legend='TR'
+
+lepMVA3_w: (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass))<0.001)*LepGood3_mvaTTH + \
+           (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001)*LepGood2_mvaTTH + \
+           (abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001)*LepGood1_mvaTTH: 20,-1,1;  XTitle="lepton MVA score (l_{3})",Legend='TR'
+lepMVA3_we: (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass))<0.001)*LepGood3_mvaTTH + \
+           (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001)*LepGood2_mvaTTH + \
+           (abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001)*LepGood1_mvaTTH: 20,-1,1;  XTitle="electron MVA score (l_{3})",Legend='TR'
+lepMVA3_wm: (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass))<0.001)*LepGood3_mvaTTH + \
+           (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001)*LepGood2_mvaTTH + \
+           (abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001)*LepGood1_mvaTTH: 20,-1,1;  XTitle="muon MVA score (l_{3})",Legend='TR'
+lepPt_w: (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass))<0.001)*LepGood3_pt + \
+         (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001)*LepGood2_pt + \
+         (abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001)*LepGood1_pt: 24,0,120;  XTitle="Lepton p_{T}(l_{3}) (GeV)",Legend='TR', Logy
+lepEleId_w: (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass))<0.001)*LepGood3_mvaIdSpring15 + \
+            (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001)*LepGood2_mvaIdSpring15 + \
+            (abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001)*LepGood1_mvaIdSpring15: 24,0,1;  XTitle="Lepton p_{T}(l_{3}) (GeV)",Legend='TR'
+
+lep1Pt:  LepGood1_pt: 20,0,200; XTitle="Leading lepton p_{T}  [GeV]", Legend='TR'
+lep2Pt:  LepGood2_pt: 20,0,100; XTitle="Subleading lepton p_{T}  [GeV]", Legend='TR'
+lep3Pt:  LepGood3_pt: 20,0,100; XTitle="Trailing lepton p_{T}  [GeV]", Legend='TR'
+lep1Eta:  abs(LepGood1_eta): 10,0,2.5; XTitle="Leading lepton |#eta|", Legend='TR', MoreY=1.5
+lep2Eta:  abs(LepGood2_eta): 10,0,2.5; XTitle="Subleading lepton |#eta|", Legend='TR', MoreY=1.5
+lep2Code:  (abs(LepGood2_pdgId) - 11) + (abs(LepGood2_eta)>1.5): [-0.5,0.5,1.5,2.5,3.5]; XTitle="Subleading lepton type: eB/eE/#muB/#muE", Legend='TR',NXDiv=404, MoreY=1.8
+lep3Eta:  abs(LepGood3_eta): 10,0,2.5; XTitle="Trailing lepton |#eta|", Legend='TR', MoreY=1.8
+lep3Code:  (abs(LepGood3_pdgId) - 11) + (abs(LepGood3_eta)>1.5): [-0.5,0.5,1.5,2.5,3.5]; XTitle="Trailing lepton type: eB/eE/#muB/#muE", Legend='TR',NXDiv=404, MoreY=1.8
+
+nJet25 : nJet25 : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5] ; XTitle='N(jet\, p_{T} > 25)'
+nJet40 : nJet40 : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5] ; XTitle='N(jet\, p_{T} > 40)'
+nBJetMedium25 : nBJetMedium25 : [-0.5,0.5,1.5,2.5,3.5,4.5] ; XTitle='N(jet\, p_{T} > 25\, CVS Medium)',XNDiv=505
+
+met:   met_pt: 30,0,150    ; XTitle="E_{T}^{miss}  [GeV]"
+met_z_log:   met_pt: 25,0,125    ; XTitle="E_{T}^{miss}  [GeV]", Logy
+
+mZ1_wide: mZ1: [20,30,40,50,60,70,75,80,82,84,86,88,90,92,94,96,98,100,102,105,110,120,130,140,150] ; XTitle="best m(l^{+}l^{-})  [GeV]", Legend='TR', Logy, Density=True, YTitle="Events/GeV"
+mZ1_wide_rebin: mZ1: [20,40,60,75,80,85,90,95,100,105,120,140] ; XTitle="best m(l^{+}l^{-})  [GeV]", Legend='TR', Density=True, YTitle="Events/GeV"
+mZ1_wide_rebin_log: mZ1: [20,40,60,75,80,85,90,95,100,105,120,140,180] ; XTitle="best m(l^{+}l^{-})  [GeV]", Legend='TR', Density=True, YTitle="Events/GeV", Logy
+mZ1_wide_fit:   mZ1: [20,40,60,75,80,85,90,95,100,105,120,140,180] ; XTitle="best m(l^{+}l^{-})  [GeV]", Legend='TR', YTitle="Events"
+mZ1: mZ1: 60,60,120 ; XTitle="best m(l^{+}l^{-})  [GeV]", Legend='TL'
+mtW: (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass)) < 0.01)*mt_2(LepGood3_pt,LepGood3_phi,met,met_phi) + (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) < 0.01)*mt_2(LepGood2_pt,LepGood2_phi,met,met_phi) + (abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) < 0.01)*mt_2(LepGood1_pt,LepGood1_phi,met,met_phi) : 14,0,140 ; XTitle="M_{T}(l_{3}\,E_{T}^{miss})", Legend='TR'
+mtW_w: (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass)) < 0.01)*mt_2(LepGood3_pt,LepGood3_phi,met,met_phi) + (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) < 0.01)*mt_2(LepGood2_pt,LepGood2_phi,met,met_phi) + (abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) < 0.01)*mt_2(LepGood1_pt,LepGood1_phi,met,met_phi) : 20,0,300 ; XTitle="M_{T}(W#rightarrowlv)", Legend='TR'
+
+minDR: min(  deltaR(LepGood1_eta,LepGood1_phi,LepGood2_eta,LepGood2_phi), \
+         min(deltaR(LepGood1_eta,LepGood1_phi,LepGood3_eta,LepGood3_phi), \
+             deltaR(LepGood2_eta,LepGood2_phi,LepGood3_eta,LepGood3_phi))) : 30,0,4; XTitle="min #DeltaR(ll)"
+
+nvtx: nVert: 40,0.5,40.5 ; XTitle="N(vertices)", Legend='TR'
+#max_muon_sip: max( max((abs(LepGood1_pdgId)==13)*LepGood1_sip3d,(abs(LepGood2_pdgId)==13)*LepGood2_sip3d ), \
+#                 (abs(LepGood3_pdgId)==13)*LepGood3_sip3d ) :  24,0.0,10. ; XTitle="Worst muon S_{IP3D}", Legend="TR"
+#max_muon_dxy: max( max((abs(LepGood1_pdgId)==13)*abs(LepGood1_dxy),(abs(LepGood2_pdgId)==13)*abs(LepGood2_dxy) ), \
+#                 (abs(LepGood3_pdgId)==13)*abs(LepGood3_dxy) )*10000: 24,0.0,100. ; XTitle="Worst muon d_{xy} [#mum]", Legend="TR"
+#max_muon_dz: max( max((abs(LepGood1_pdgId)==13)*abs(LepGood1_dz),(abs(LepGood2_pdgId)==13)*abs(LepGood2_dz) ), \
+#                 (abs(LepGood3_pdgId)==13)*abs(LepGood3_dz) )*10000:  24,0.0,600. ; XTitle="Worst muon d_{z} [#mum]", Legend="TR"

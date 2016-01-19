@@ -76,6 +76,12 @@ eventFlagsAna = cfg.Analyzer(
     }
     )
 
+# Provenance (CMSSW version)
+provenanceAna = cfg.Analyzer(
+    ProvenanceAnalyzer, name="ProvenanceAnalyer"
+)
+
+
 # Select a list of good primary vertices (generic)
 vertexAna = cfg.Analyzer(
     VertexAnalyzer, name="VertexAnalyzer",
@@ -462,6 +468,7 @@ susyCoreSequence = [
    #eventSelector,
     jsonAna,
     triggerAna,
+    provenanceAna,
     pileUpAna,
     genAna,
     genHiggsAna,

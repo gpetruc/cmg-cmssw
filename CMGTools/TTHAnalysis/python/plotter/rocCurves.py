@@ -27,6 +27,12 @@ def hist2ROC1d(hsig,hbg):
             bi.append(fullbi[i])
     if len(si) == 2: # just one WP + dummy (100%,100%)
         si = [si[0]]; bi = [ bi[0] ]
+    else:
+        si = si[:-1]
+        bi = bi[:-1]
+        #avgsp = sum(abs(si[i]-si[i+1])/sums for i in xrange(len(si)-1))/len(si)
+        #avgbp = sum(abs(bi[i]-bi[i+1])/sumb for i in xrange(len(bi)-1))/len(bi)
+        
     bins = len(si)
     ret = ROOT.TGraph(bins)
     for i in xrange(bins):

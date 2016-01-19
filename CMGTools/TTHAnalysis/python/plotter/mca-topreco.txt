@@ -1,0 +1,5 @@
+#TT : TTJets_LO: xsec ;  FillColor=ROOT.kGray
+TT_goodWjj+: TTJets_LO: xsec : Wjj_mciW != -1;  FillColor=ROOT.kGray+1, Label="tt good"
+TT_badWjj : TTJets_LO: xsec : Wjj_mciW == -1;  FillColor=ROOT.kRed+1, Label="tt bad"
+ttH_goodWjj+: TTHnobb_pow: xsec : Wjj_mciW != -1;  FillColor=ROOT.kAzure+1, Label="ttH good"
+ttH_badWjj : TTHnobb_pow: xsec : Wjj_mciW == -1;  FillColor=ROOT.kPink+7, Label="ttH bad"

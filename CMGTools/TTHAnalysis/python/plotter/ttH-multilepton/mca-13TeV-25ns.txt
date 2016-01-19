@@ -1,0 +1,96 @@
+# vim: syntax=sh
+# DEFAULTS FOR ALL TREES
+* ; TreeName="treeProducerSusyMultilepton"
+
+
+TTH+ : TTHnobb: xsec : GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24 || GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+1, Label="ttH", NormSystematic=0.2
+#TTH_true+ : TTHnobb_pow : xsec : (GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24 || GenHiggsDecayMode == 15) && LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 ; FillColor=ROOT.kOrange+1, Label="ttH", NormSystematic=0.2
+#TTH_true3l+ : TTHnobb_pow : xsec : (GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24 || GenHiggsDecayMode == 15) && LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 && LepGood3_mcMatchId != 0 ; FillColor=ROOT.kOrange+1, Label="ttH", NormSystematic=0.2
+#TTH_true4l+ : TTHnobb_pow : xsec : (GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24 || GenHiggsDecayMode == 15) && LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 && LepGood3_mcMatchId != 0 && LepGood4_mcMatchId != 0 ; FillColor=ROOT.kOrange+1, Label="ttH", NormSystematic=0.2
+
+##Susy_T2tt_arxiv150701601_true : T2tt_arxiv150701601 : xsec : LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 ; FillColor=ROOT.kAzure+1, Label="Susy", NormSystematic=0.2
+#Susy_T1tttt_mGo1500_mChi100: T1tttt_mGo1500_mChi100 : xsec : 1  ; FillColor=ROOT.kRed, Label="SUSY"
+##Susy_T1tttt_mGo1200_mChi800_true : T1tttt_mGo1200_mChi800 : xsec : LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 ; FillColor=ROOT.kAzure+10, Label="Susy T1", NormSystematic=0.2
+##Susy_T6ttWW_mSbot600_mCh425_mChi50_true : T6ttWW_mSbot600_mCh425_mChi50 : xsec : LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 ; FillColor=ROOT.kAzure+2, Label="Susy T6", NormSystematic=0.2
+
+TTW: TTWToLNu : xsec : 1; FillColor=ROOT.kGreen+2, Label="ttW", NormSystematic=0.2
+TTZ: TTZToLLNuNu : xsec : 1 ; FillColor=ROOT.kGreen+1, Label="ttZ", NormSystematic=0.2
+#TTW_true : TTWToLNu : xsec : LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 ; FillColor=ROOT.kGreen+2, Label="ttW", NormSystematic=0.2
+#TTZ_true : TTZToLLNuNu : xsec : LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 ; FillColor=ROOT.kGreen+1, Label="ttZ", NormSystematic=0.2
+TTGS: TTLLJets_m1to10 : xsec : 1 ; FillColor=ROOT.kOrange-3, Label="tt\#gamma*", NormSystematic=0.2
+
+TTG3: TTGJets:     xsec  : (LepGood1_mcMatchAny==1)+(LepGood2_mcMatchAny==1)+(LepGood3_mcMatchAny==1)==3  ;  FillColor=ROOT.kOrange-4, Label="tt\#gamma (3l)"    
+TTG2: TTGJets:     xsec  : (LepGood1_mcMatchAny==1)+(LepGood2_mcMatchAny==1)+(LepGood3_mcMatchAny==1)!=3  ;  FillColor=ROOT.kTeal-8, Label="tt\#gamma (<3l)"    
+#TG: TGJets:      xsec    ;  FillColor=ROOT.kTeal-5, Label="tt\#gamma"    
+
+#TT : TTJets: xsec ; FillColor=ROOT.kGray+1, Label="tt", NormSystematic=0.2
+TT : TTJets_DiLepton: xsec ; FillColor=ROOT.kGray+1, Label="tt", NormSystematic=0.2
+TT : TTJets_SingleLeptonFromT: xsec ; FillColor=ROOT.kGray+1, Label="tt", NormSystematic=0.2
+TT : TTJets_SingleLeptonFromTbar: xsec ; FillColor=ROOT.kGray+1, Label="tt", NormSystematic=0.2
+#TT_2lssfake : TT_pow: xsec : LepGood1_mcMatchId == 0 || LepGood2_mcMatchId == 0 ; FillColor=ROOT.kGray+1, Label="tt", NormSystematic=0.5
+#TT_2lsstrue : TT_pow: xsec : LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 ; FillColor=ROOT.kGray+1, Label="tt", NormSystematic=0.5
+TW: TBar_tWch : xsec : 1  ; FillColor=ROOT.kGray+2, Label="tW", NormSystematic=0.2
+TW: T_tWch : xsec : 1  
+T: TToLeptons_tch : xsec : 1; FillColor=ROOT.kGray+3, Label="t", NormSystematic=0.2
+T: TbarToLeptons_tch : xsec : 1; FillColor=ROOT.kGray+3, Label="t", NormSystematic=0.2
+#T: TToLeptons_sch_amcatnlo : xsec : 1; FillColor=ROOT.kGray+3, Label="t", NormSystematic=0.2
+
+WW : WWTo2L2Nu: xsec : 1 ;  FillColor=ROOT.kBlue-9
+WZ : WZTo3LNu:  xsec : 1 ;  FillColor=ROOT.kViolet-4
+ZZ : ZZTo4L:    xsec : 1 ;  FillColor=ROOT.kAzure-9
+
+DY : DYJetsToLL_M10to50: xsec: 1 ;  FillColor=ROOT.kCyan, NormSystematic=0.2
+DY : DYJetsToLL_M50:     xsec: 1 ;  FillColor=ROOT.kCyan, NormSystematic=0.2
+
+WJets : WJetsToLNu    : xsec : 1 ;  FillColor=ROOT.kCyan+2
+
+
+VZpX: WZTo3LNu:  xsec : 1 ;  FillColor=ROOT.kViolet-4, NormSystematic=0.2, Label="VZ+X"
+VZpX: ZZTo4L:    xsec : 1 ;
+VZpX: TTZToLLNuNu : xsec : 1 ;
+ZpX: DYJetsToLL_M10to50: xsec: 1 ;  FillColor=ROOT.kCyan, NormSystematic=0.2, Label="Z+X"
+ZpX: DYJetsToLL_M50:     xsec: 1 ;
+#ZpX: WZTo3LNu:  xsec : 1 ;
+#ZpX: ZZTo4L:    xsec : 1 ;
+#ZpX: TTZToLLNuNu : xsec : 1 ;
+NonRes3L:  TTWToLNu : xsec : 1.00 ; FillColor=ROOT.kGray+1, Label="Non Z", NormSystematic=0.12
+#NonRes3L: TTGJets:     xsec: 1.00;
+NonRes3L:  TTJets: xsec : 1.00;
+NonRes3L:  TBar_tWch : xsec : 1.00  ;
+NonRes3L:  T_tWch : xsec : 1.00  ;
+NonRes3L:  WWTo2L2Nu: xsec : 1.00 ;
+
+data: DoubleEG_Run2015C_Oct05_runs_254231_254914
+data: DoubleEG_Run2015D_Oct05_runs_256630_258158
+data: DoubleEG_Run2015D_PromptV4_runs_258159_258750
+data: DoubleEG_Run2015D_PromptV4_runs_258751_260627
+data: DoubleMuon_Run2015C_Oct05_runs_254231_254914
+data: DoubleMuon_Run2015D_Oct05_runs_256630_258158
+data: DoubleMuon_Run2015D_PromptV4_runs_258159_258750
+data: DoubleMuon_Run2015D_PromptV4_runs_258751_260627
+data: MuonEG_Run2015C_Oct05_runs_254231_254914
+data: MuonEG_Run2015D_Oct05_runs_256630_258158
+data: MuonEG_Run2015D_PromptV4_runs_258159_258750
+data: MuonEG_Run2015D_PromptV4_runs_258751_260627
+data: SingleElectron_Run2015C_Oct05_runs_254231_254914
+data: SingleElectron_Run2015D_Oct05_runs_256630_258158
+data: SingleElectron_Run2015D_PromptV4_runs_258159_258750
+data: SingleElectron_Run2015D_PromptV4_runs_258751_260627
+data: SingleMuon_Run2015C_Oct05_runs_254231_254914
+data: SingleMuon_Run2015D_Oct05_runs_256630_258158
+data: SingleMuon_Run2015D_PromptV4_runs_258159_258750
+data: SingleMuon_Run2015D_PromptV4_runs_258751_260627
+
+
+#TTW_w1a:   TTWToLNu : xsec               : 1; FillColor=ROOT.kBlack, Label="nominal", NormSystematic=0.2
+#TTW_w1:    TTWToLNu : xsec               : (LHEweight_id == 1001); FillColor=ROOT.kBlack, Label="nominal", NormSystematic=0.2
+#TTW_w1001: TTWToLNu : xsec*LHEweight_wgt : (LHEweight_id == 1001); FillColor=ROOT.kBlack, Label="nominal", NormSystematic=0.2
+#TTW_w1005: TTWToLNu : xsec*LHEweight_wgt : (LHEweight_id == 1005); FillColor=ROOT.kRed+1, Label="\#mu * 2", NormSystematic=0.2
+#TTW_w1009n: TTWToLNu : xsec*LHEweight_wgt/1.11883 : (LHEweight_id == 1009); FillColor=ROOT.kBlue+2, Label="\#mu * \#frac{1}{2}", NormSystematic=0.2
+#TTW_w1005n: TTWToLNu : xsec*LHEweight_wgt/0.872829 : (LHEweight_id == 1005); FillColor=ROOT.kRed+1, Label="\#mu * 2", NormSystematic=0.2
+#TTW_w1009: TTWToLNu : xsec*LHEweight_wgt : (LHEweight_id == 1009); FillColor=ROOT.kBlue+2, Label="\#mu * \#frac{1}{2}", NormSystematic=0.2
+#TTW_w1001: TTWToLNu : xsec : 1; FillColor=ROOT.kBlack, Label="nominal", NormSystematic=0.2
+#TTW_w1005: TTWToLNu : xsec*LHEweight_wgt[4]/LHEweight_wgt[0] : 1 ; FillColor=ROOT.kRed+1, Label="\#mu * 2", NormSystematic=0.2
+#TTW_w1009: TTWToLNu : xsec*LHEweight_wgt[8]/LHEweight_wgt[0] : 1 ; FillColor=ROOT.kBlue+2, Label="\#mu * \#frac{1}{2}", NormSystematic=0.2
+#TTW_w1005n: TTWToLNu : xsec*LHEweight_wgt[4]/LHEweight_wgt[0]/0.872829 : 1 ; FillColor=ROOT.kRed+1, Label="\#mu * 2", NormSystematic=0.2
+#TTW_w1009n: TTWToLNu : xsec*LHEweight_wgt[8]/LHEweight_wgt[0]/1.11883 : 1 ; FillColor=ROOT.kBlue+2, Label="\#mu * \#frac{1}{2}", NormSystematic=0.2

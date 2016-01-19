@@ -1,0 +1,3 @@
+pass_CSVL: Jet_btagCSV > 0.605: 2,-0.5,1.5; Title="CSV L" 
+pass_CSVM: Jet_btagCSV > 0.89 : 2,-0.5,1.5; Title="CSV M"
+pass_CSVT: Jet_btagCSV > 0.97 : 2,-0.5,1.5; Title="CSV T"

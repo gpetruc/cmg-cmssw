@@ -1,0 +1,24 @@
+# vim: syntax=sh
+>= 2 good leptons: nLepGood >= 2
+minMll12: minMllAFAS > 12
+same-sign: LepGood1_charge*LepGood2_charge > 0
+lep1_pt20: LepGood1_pt > 20
+lep2_pt15: LepGood2_pt > 15 
+#lep3_pt10: LepGood3_pt > 10 
+#anyl3: abs(LepGood3_pdgId) > 0
+ele cuts: (abs(LepGood1_pdgId) == 13 || (LepGood1_convVeto && LepGood1_lostHits == 0) ) && ( abs(LepGood2_pdgId) == 13 || (LepGood2_convVeto && LepGood2_lostHits == 0) )
+mu cuts:  LepGood1_mediumMuonId > 0  && LepGood2_mediumMuonId > 0
+tight-charge: ( LepGood1_tightCharge > (abs(LepGood1_pdgId) == 11) ) && ( LepGood2_tightCharge > (abs(LepGood2_pdgId) == 11) )
+sip8: max(LepGood1_sip3d,LepGood2_sip3d) < 8
+lepMVA1or2: max(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.6
+lepMVA1or2L: min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.6
+#mtW : (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass)) < 0.01)*mt_2(LepGood3_pt,LepGood3_phi,met,met_phi) + (abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) < 0.01)*mt_2(LepGood2_pt,LepGood2_phi,met,met_phi) + (abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) < 0.01)*mt_2(LepGood1_pt,LepGood1_phi,met,met_phi)  > 30
+#lepMVA3_0: LepGood3_mvaTTH > 0.0
+2jet: nJet25 >= 2
+1b: nBJetMedium25 >= 1
+#no2b: nBJetMedium25 <= 2
+#1b: nBJetMedium25 >= 1
+noSignal: nJet25 <= 4 || nBJetMedium25 <= 1
+
+#2b loose: nBJetLoose25 >= 2 || nBJetMedium25 >= 1
+#2B tight: nBJetMedium25 >= 2

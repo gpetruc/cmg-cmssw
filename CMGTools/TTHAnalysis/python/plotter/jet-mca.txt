@@ -1,0 +1,12 @@
+# vim: syntax=sh
+# DEFAULTS FOR ALL TREES
+* ; TreeName="treeProducerSusyMultilepton"
+
+TTb : TTJets: xsec : abs(Jet_mcFlavour) == 5 ; FillColor=ROOT.kGray+1, Label="tt\, b-jet", NormSystematic=0.2
+TTc : TTJets: xsec : abs(Jet_mcFlavour) == 4 ; FillColor=ROOT.kGray+2, Label="tt\, c-jet", NormSystematic=0.2
+TTl : TTJets: xsec : abs(Jet_mcFlavour) != 5 && abs(Jet_mcFlavour) != 4; FillColor=ROOT.kGray+3, Label="tt\, l-jet", NormSystematic=0.2
+
+
+DYb : DYJetsToLL_M50: xsec: abs(Jet_mcFlavour) == 5 ; FillColor=ROOT.kCyan, Label="DY\, b-jet", NormSystematic=0.2
+DYc : DYJetsToLL_M50: xsec: abs(Jet_mcFlavour) == 4 ; FillColor=ROOT.kCyan+1, Label="DY\, c-jet", NormSystematic=0.2
+DYl : DYJetsToLL_M50: xsec: abs(Jet_mcFlavour) != 5 && abs(Jet_mcFlavour) != 4 ; FillColor=ROOT.kCyan+2, Label="DY\, l-jet", NormSystematic=0.2

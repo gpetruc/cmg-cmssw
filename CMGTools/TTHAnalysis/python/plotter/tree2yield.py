@@ -249,6 +249,7 @@ class TreeToYield:
             plot.GetYaxis().SetTitle(spec.getOption('YTitle',"Events"))
             plot.GetXaxis().SetTitle(spec.getOption('XTitle',spec.name))
             plot.GetXaxis().SetNdivisions(spec.getOption('XNDiv',510))
+            plot.GetXaxis().SetMoreLogLabels(True)
     def getPlot(self,plotspec,cut):
         ret = self.getPlotRaw(plotspec.name, plotspec.expr, plotspec.bins, cut, plotspec)
         # fold overflow
@@ -272,6 +273,7 @@ class TreeToYield:
                     ret.SetBinContent( b, ret.GetBinContent(b) / ret.GetXaxis().GetBinWidth(b) )
                     ret.SetBinError(   b, ret.GetBinError(b) / ret.GetXaxis().GetBinWidth(b) )
         self._stylePlot(ret,plotspec)
+        ret._cname = self._cname
         return ret
     def getPlotRaw(self,name,expr,bins,cut,plotspec):
         unbinnedData2D = plotspec.getOption('UnbinnedData2D',False) if plotspec != None else False
@@ -398,7 +400,8 @@ class TreeToYield:
 
 def addTreeToYieldOptions(parser):
     parser.add_option("-l", "--lumi",           dest="lumi",   type="float", default="19.7", help="Luminosity (in 1/fb)");
-    parser.add_option("-u", "--unweight",       dest="weight",       action="store_false", default=True, help="Don't use weights (in MC events)");
+    parser.add_option("-u", "--unweight",       dest="weight",   action="store_false", default=True, help="Don't use weights (in MC events)");
+    parser.add_option("--nolxs",                 dest="noLXS",     action="store_true", default=False, help="Don't scale MC by lumi, xsection and total events");
     parser.add_option("-W", "--weightString",   dest="weightString", type="string", default="1", help="Use weight (in MC events)");
     parser.add_option("--fsy", "--full-sample-yield",  dest="fullSampleYields", action="store_true", default=False, help="Compute also the yield as if all events passed");
     parser.add_option("-f", "--final",  dest="final", action="store_true", help="Just compute final yield after all cuts");
@@ -440,13 +443,20 @@ def mergeReports(reports):
 
 def mergePlots(name,plots):
     one = plots[0].Clone(name)
+    one._preMerge = getattr(plots[0], '_preMerge', [plots[0]])[:]
     if "TGraph" in one.ClassName():
+        nonEmpty = [ g for g in plots if g.GetN() > 0 ]
+        if len(nonEmpty) == 0: return one # nothing good to do
+        one = nonEmpty[0].Clone(name)
+        one._preMerge = getattr(plots[0], '_preMerge', [nonEmpty[0]])[:]
         others = ROOT.TList()
-        for two in plots[1:]: 
+        for two in nonEmpty[1:]: 
             others.Add(two)
+            one._preMerge += getattr(two, '_preMerge', [two])[:]
         one.Merge(others)
     else:         
         for two in plots[1:]: 
             one.Add(two)
+            one._preMerge += getattr(two, '_preMerge', [two])[:]
     return one
 

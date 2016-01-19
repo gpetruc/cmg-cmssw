@@ -109,6 +109,9 @@ if __name__=="__main__":
    if 1:
        f2 = ROOT.TFile("/data1/p/peruzzi/TREES_74X_230915_MiniIso_7_4_12/%s/treeProducerSusyMultilepton/tree.root"%dataset2)
        t2 = [t,f2.tree] # average
+   elif 2:
+       f2 = ROOT.TFile("/data1/p/peruzzi/TREES_74X_230915_MiniIso_7_4_12/%s/treeProducerSusyMultilepton/tree.root"%dataset2)
+       t2 = f2.tree
    else:
        t2 = t
    #t.AddFriend("sf/t","/data1/p/peruzzi/TREES_74X_230915_MiniIso_7_4_12/1_lepAwareJECShifts_v1/evVarFriend_%s.root"%dataset)
@@ -116,20 +119,34 @@ if __name__=="__main__":
    h_temp=ROOT.TH1F("dummy","dummy",2,-0.5,1.5)
 
    #cut = "abs(LepGood_pdgId) == 11 && LepGood_pt > 25 && LepGood_mediumMuonId >= 1"
-   cut = "abs(LepGood_pdgId) == 13 && LepGood_pt > 20 && LepGood_mediumMuonId >= 1"
+   #cut = "abs(LepGood_pdgId) == 13 && LepGood_pt > 25 && LepGood_mediumMuonId >= 1"
+   cut = "abs(LepGood_pdgId) == 13 && (LepGood_pt > 10 && LepGood_pt < 25) && LepGood_mediumMuonId >= 1"
    scut, bcut = "(%s) && (LepGood_mcMatchId!=0)" % cut, "(%s) && (LepGood_mcMatchId==0)" % cut
    params  = [["miniIsoCut",0.05,0.25],["ptRatioCut",0.5,0.95],["ptRelCut",3,20]]
-   params2 = [["miniIsoCut",0.05,0.20,'<'],["ptRatioCut",0.6,0.9,'>'],["ptRelCut",3,12,'>']]
+   #params2 = [["miniIsoCut",0.05,0.20,'<'],["ptRatioCut",0.6,0.9,'>'],["ptRelCut",3,12,'>']]
+   params2 = [["miniIsoCut",0.15,0.30,'<'],["ptRatioCut",0.5,0.9,'>'],["ptRelCut",3,12,'>']]
+   params2 = [["miniIsoCut",0.25,0.25,'<'],["ptRatioCut",0.5,0.9,'>'],["ptRelCut",3,12,'>']]
 
    oldWPs = []
-   if True:
+   if 0:
        for (L,I) in reversed([("L", 1), ("M", 2), ("T",3), ("VT",4)]):
            (effs,effb) = get_Eff_ND(t2,t,"multiIso_singleWP(LepGood_miniRelIso,LepGood_jetPtRatio,LepGood_jetPtRel,%d)" % I,scut,bcut)
            oldWPs.append( (L, I, effs, effb) )
        print oldWPs
 
+   if 0:
+       get_Eff_ND(t2,t,"LepGood_miniRelIso < 0.2",scut,bcut)
+       get_Eff_ND(t2,t,"LepGood_miniRelIso < 0.25",scut,bcut)
+       get_Eff_ND(t2,t,"LepGood_miniRelIso < 0.30",scut,bcut)
+       #get_Eff_ND(t2,t,"LepGood_miniRelIso < 0.35",scut,bcut)
+       get_Eff_ND(t2,t,"LepGood_miniRelIso < 0.2 || LepGood_jetPtRelv2 > 10",scut,bcut)
+       get_Eff_ND(t2,t,"LepGood_miniRelIso < 0.2 || LepGood_jetPtRelv2 > 8",scut,bcut)
+       get_Eff_ND(t2,t,"LepGood_miniRelIso < 0.25 || LepGood_jetPtRelv2 > 10",scut,bcut)
+       exit()
+
    newWPs = []
-   for targetEff in [ effs-0.001 for (L,I,effs,effb) in oldWPs ]:
+   #for targetEff in [ effs-0.001 for (L,I,effs,effb) in oldWPs ]:
+   for targetEff in 0.90,:
        #print 'training 2015'
        #mIso = "LepGood_miniRelIso<miniIsoCut && (LepGood_jetPtRatio>ptRatioCut || LepGood_jetPtRel>ptRelCut)"
        #optimize_Eff_ND(t,t,mIso,targetEff,params,scut,bcut,algo="Scan",scanPointsND=1000)

@@ -1,0 +1,16 @@
+### LEPTONS
+#miniRelIso: max(LepGood1_miniRelIso,LepGood2_miniRelIso): 2000,0,1; Title="miniRelIso"
+mi005Sip4: max(LepGood1_miniRelIso,LepGood2_miniRelIso)<0.05 && max(LepGood1_sip3d,LepGood2_sip3d)<4:  2,-0.5,1.5; Title="mini+Sip", MarkerColor=ROOT.kBlack
+multi: multiIso_multiWP(LepGood1_pdgId,LepGood1_pt,LepGood1_eta,LepGood1_miniRelIso,LepGood1_jetPtRatio,LepGood1_jetPtRel,2) > 0 && multiIso_multiWP(LepGood2_pdgId,LepGood2_pt,LepGood2_eta,LepGood2_miniRelIso,LepGood2_jetPtRatio,LepGood2_jetPtRel,2) > 0  && max(LepGood1_sip3d,LepGood2_sip3d)<4 :  2,-0.5,1.5; Title="multi+sip4", MarkerColor=ROOT.kGray+1
+mvaTTH: min(LepGood1_mvaTTH,LepGood2_mvaTTH): 2000,-1,1; Title="mvaTTH", LineColor=ROOT.kGreen+0
+mvaTTH_06: min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.6 : 2,-0.5,1.5; Title=" > 0.6", MarkerColor=ROOT.kGreen+1
+mvaTTH_08: min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.8 : 2,-0.5,1.5; Title=" > 0.8", MarkerColor=ROOT.kGreen+0
+mvaNW:  min(LepGood1_mvattHMini,LepGood2_mvattHMini): 2000,-1,1; Title="mva NW", LineColor=ROOT.kAzure-9
+mvaNW_06: min(LepGood1_mvattHMini,LepGood2_mvattHMini) > 0.6 : 2,-0.5,1.5; Title=" > 0.6", MarkerColor=ROOT.kAzure-2
+mvaNW_08: min(LepGood1_mvattHMini,LepGood2_mvattHMini) > 0.8 : 2,-0.5,1.5; Title=" > 0.8", MarkerColor=ROOT.kAzure-9
+mvaPt:  min(LepGood1_mvattHMiniPt,LepGood2_mvattHMiniPt): 2000,-1,1; Title="mva Pt", LineColor=ROOT.kRed-7
+mvaPt_07: min(LepGood1_mvattHMiniPt,LepGood2_mvattHMiniPt) > 0.7 : 2,-0.5,1.5; Title=" > 0.7", MarkerColor=ROOT.kRed+0
+mvaPt_085: min(LepGood1_mvattHMiniPt,LepGood2_mvattHMiniPt) > 0.85 : 2,-0.5,1.5; Title=" > 0.85", MarkerColor=ROOT.kRed-7
+mvaPtD: LepGood1_mvattHMiniPt > 0.7-0.03*max(25-LepGood1_pt,0) && LepGood2_mvattHMiniPt > 0.7-0.03*max(25-LepGood2_pt,0) : 2,-0.5,1.5; Title=" pt dep", MarkerColor=ROOT.kMagenta+1
+
+

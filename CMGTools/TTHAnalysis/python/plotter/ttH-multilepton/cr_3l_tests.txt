@@ -1,0 +1,26 @@
+# vim: syntax=sh
+>= 3 good leptons: nLepGood >= 3
+minMll12: minMllAFAS > 12
+lep1_pt20: LepGood1_pt > 20
+lep2_pt15: LepGood2_pt > 15 
+lep3_pt10: LepGood3_pt > 10 
+anyl3: abs(LepGood3_pdgId) > 0
+ele cuts: (abs(LepGood1_pdgId) == 13 || (LepGood1_convVeto && LepGood1_lostHits == 0) ) && \
+          (abs(LepGood2_pdgId) == 13 || (LepGood2_convVeto && LepGood2_lostHits == 0) ) && \
+          (abs(LepGood3_pdgId) == 13 || (LepGood3_convVeto && LepGood3_lostHits == 0) ) 
+mu cuts:  LepGood1_mediumMuonId > 0  && LepGood2_mediumMuonId > 0 && LepGood3_mediumMuonId > 0 
+sip8: max(LepGood1_sip3d,LepGood2_sip3d) < 8 && LepGood3_sip3d < 8
+met : met_pt > 20
+relax: mZ1 > 20
+z1 : mZ1 > 60 && mZ1 < 120
+#lepMVA12: min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.65
+lepMVAZ: abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass))<0.001 && min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.65 || \
+         abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001 && min(LepGood1_mvaTTH,LepGood3_mvaTTH) > 0.65 || \
+         abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001 && min(LepGood2_mvaTTH,LepGood3_mvaTTH) > 0.65 
+Wmuon: abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass))<0.001 && abs(LepGood3_pdgId)==13 || \
+       abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001 && abs(LepGood2_pdgId)==13 || \
+       abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001 && abs(LepGood1_pdgId)==13 
+EleID: abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass))<0.001 && LepGood3_mvaIdSpring15 > 0 || \
+       abs(mZ1-mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001 && LepGood2_mvaIdSpring15 > 0 || \
+       abs(mZ1-mass_2(LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass))<0.001 && LepGood1_mvaIdSpring15 > 0 
+        

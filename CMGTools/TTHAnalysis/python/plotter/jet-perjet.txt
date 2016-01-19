@@ -1,0 +1,3 @@
+pt25 : Jet_pt > 25
+eta  : abs(Jet_eta) < 2.4
+mc   : Jet_mcPt > 0

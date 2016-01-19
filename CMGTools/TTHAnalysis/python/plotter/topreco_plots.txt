@@ -1,0 +1,22 @@
+nvtx: nVert: 40,0.5,40.5 ; XTitle="N(vertices)", Legend='TR'
+met_wide: met: 24,0,200    ; XTitle="E_{T}^{miss}  [GeV]" 
+mtW1: mt_2(LepGood1_pt,LepGood1_phi,met_pt,met_phi) : 18,0,300; XTitle="M_{T}(l_{1}\,E_{T}^{miss}) [GeV]",Legend='TR'
+nJet25 : nJet25 : 9,-0.5,8.5 ; XTitle='N(jet\, p_{T} > 25)', Legend='TL'
+nJet30 : nJet30 : 9,-0.5,8.5 ; XTitle='N(jet\, p_{T} > 30)', Legend='TL'
+nJet40 : nJet40 : 9,-0.5,8.5 ; XTitle='N(jet\, p_{T} > 40)', Legend='TL'
+nBJetMedium25 : nBJetMedium25 : 5,-0.5,4.5 ; XTitle='N(bJet\, p_{T} > 25 \,medium)', Legend='TR'
+nBJetMedium40 : nBJetMedium40 : 5,-0.5,4.5 ; XTitle='N(bJet\, p_{T} > 40 \,medium)', Legend='TR'
+nBJetLoose25  : nBJetLoose25 : 5,-0.5,4.5 ; XTitle='N(bJet\, p_{T} > 25 \,loose)', Legend='TR'
+Wjj_mass : Wjj_mass : 40,0,200 ; XTitle="M(W#rightarrowjj)  [GeV]"
+Wjj_pt : Wjj_pt : 40,0,200 ; XTitle="p_{T}(W#rightarrowjj)  [GeV]"
+Wjj_eta : abs(Wjj_eta) : 40,0,4 ; XTitle="p_{T}(W#rightarrowjj)  [GeV]"
+Wjj_ij1 : Wjj_ij1 : 13,-0.5,12.5 ; XTitle="i(j1)"
+Wjj_ij2 : Wjj_ij2 : 13,-0.5,12.5 ; XTitle="i(j2)"
+Wjj_j1pt: Jet_pt[Wjj_ij1] : 40,0,200 ; XTitle="p_{T}(j1)  [GeV]"
+Wjj_j2pt: Jet_pt[Wjj_ij2] : 40,0,200 ; XTitle="p_{T}(j2)  [GeV]"
+Wjj_dEta: abs(Jet_eta[Wjj_ij1]-Jet_eta[Wjj_ij2]) : 40,0,4; XTitle="|#Delta#eta(j1\,j2)|"
+Wjj_maxBTag: max(Jet_btagCSV[Wjj_ij1],Jet_btagCSV[Wjj_ij2]) : 40,0,1; XTitle="max bTag(j1\,j2)"
+Wjj_minBTag: min(Jet_btagCSV[Wjj_ij1],Jet_btagCSV[Wjj_ij2]) : 40,0,1; XTitle="min bTag(j1\,j2)"
+Wjj_maxQGL: max(Jet_qgl[Wjj_ij1],Jet_qgl[Wjj_ij2]) : 40,0,1; XTitle="max QGL(j1\,j2)"
+Wjj_minQGL: min(Jet_qgl[Wjj_ij1],Jet_qgl[Wjj_ij2]) : 40,0,1; XTitle="min QGL(j1\,j2)"
+Wjj_charge: Jet_charge[Wjj_ij1]+Jet_charge[Wjj_ij2] : 40,-2,2; XTitle="q(j1)+q(j2)"

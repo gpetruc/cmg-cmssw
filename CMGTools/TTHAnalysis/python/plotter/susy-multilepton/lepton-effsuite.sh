@@ -15,13 +15,20 @@ if [[ "$1" == "-b" ]]; then BG=" & "; shift; else BG=" -j 2 "; fi
 what=$1;
 case $what in
 signal)
-    for W in L M T VT; do 
-    EFFS="mcEfficiencies.py -p TT_true,T1tttt_true ${BCORE} susy-multilepton/lepton-sels.txt -X iso ttH-multilepton/lepton-xvars.txt --groupBy process,cut --legend=BR";
-    echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/mu_eta_00_12_${W}.root  -R pt25 eta 'abs(LepGood_eta)<1.2' --sP pt_fine --sP 'multiIso.*_${W}'  ${BG} )"
-    echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/mu_eta_12_24_${W}.root  -R pt25 eta 'abs(LepGood_eta)>1.2' --sP pt_fine --sP 'multiIso.*_${W}'  ${BG} )"
-    EFFS="mcEfficiencies.py -p TT_true,T1tttt_true ${BCORE} susy-multilepton/lepton-sels.txt -X muon -X iso ttH-multilepton/lepton-xvars.txt --groupBy process,cut --legend=BR";
-    echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/el_eta_00_15_${W}.root  -R pt25 eta 'abs(LepGood_eta)<1.479' --sP pt_fine --sP 'multiIso.*_${W}'  ${BG} )"
-    echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/el_eta_15_25_${W}.root  -R pt25 eta 'abs(LepGood_eta)>1.479' --sP pt_fine --sP 'multiIso.*_${W}'  ${BG} )"
+    EFFS="mcEfficiencies.py -p TT_true,T1tttt_true ${BCORE} susy-multilepton/lepton-sels.txt -X iso ttH-multilepton/lepton-xvars.txt --groupBy process --legend=BR";
+    echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/mu_eta_00_12_all.root  -R pt25 eta 'abs(LepGood_eta)<1.2' --sP pt_fine --sP 'multiIsov2_.*'  ${BG} )"
+    echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/mu_eta_12_24_all.root  -R pt25 eta 'abs(LepGood_eta)>1.2' --sP pt_fine --sP 'multiIsov2_.*'  ${BG} )"
+    EFFS="mcEfficiencies.py -p TT_true,T1tttt_true ${BCORE} susy-multilepton/lepton-sels.txt -X muon -X iso ttH-multilepton/lepton-xvars.txt --groupBy process --legend=BR";
+    echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/el_eta_00_15_all.root  -R pt25 eta 'abs(LepGood_eta)<1.479' --sP pt_fine --sP 'multiIsov2_.*'  ${BG} )"
+    echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/el_eta_15_25_all.root  -R pt25 eta 'abs(LepGood_eta)>1.479' --sP pt_fine --sP 'multiIsov2_.*'  ${BG} )"
+    for W in VL L M T VT; do 
+        break;
+        EFFS="mcEfficiencies.py -p TT_true,T1tttt_true ${BCORE} susy-multilepton/lepton-sels.txt -X iso ttH-multilepton/lepton-xvars.txt --groupBy process --legend=BR";
+        echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/mu_eta_00_12_${W}.root  -R pt25 eta 'abs(LepGood_eta)<1.2' --sP pt_fine --sP 'multiIso.*_${W}'  ${BG} )"
+        echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/mu_eta_12_24_${W}.root  -R pt25 eta 'abs(LepGood_eta)>1.2' --sP pt_fine --sP 'multiIso.*_${W}'  ${BG} )"
+        EFFS="mcEfficiencies.py -p TT_true,T1tttt_true ${BCORE} susy-multilepton/lepton-sels.txt -X muon -X iso ttH-multilepton/lepton-xvars.txt --groupBy process --legend=BR";
+        echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/el_eta_00_15_${W}.root  -R pt25 eta 'abs(LepGood_eta)<1.479' --sP pt_fine --sP 'multiIso.*_${W}'  ${BG} )"
+        echo "( python $EFFS --yrange 0 1.  -o $PBASE/$what/el_eta_15_25_${W}.root  -R pt25 eta 'abs(LepGood_eta)>1.479' --sP pt_fine --sP 'multiIso.*_${W}'  ${BG} )"
     done
     ;;
 fakes)

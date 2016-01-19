@@ -803,4 +803,38 @@ float multiIso_singleWP_relaxFO4(int LepGood_pdgId, float LepGood_pt, float LepG
   else assert(false);
 }
 
+float ttHl_ptFO(int LepGood_pdgId, float LepGood_pt, float LepGood_jetPtRatio, float LepGood_mva, float WP) {
+    if (LepGood_mva > WP) return LepGood_pt;
+    float corr = 1.0;
+    if (std::abs(WP-0.65)<0.05) { 
+        if (std::abs(LepGood_pdgId) == 11) {
+            if (LepGood_pt > 20) corr = 0.85;
+            else if (LepGood_pt < 10) corr = 1.0;
+            else corr = 0.85+0.015*(20.-LepGood_pt); // interpolate
+        } else {
+            if (LepGood_pt > 20) corr = 0.76;
+            else if (LepGood_pt < 10) corr = 1.0;
+            else corr = 0.76+0.024*(20.-LepGood_pt); // interpolate up from 0.75 to 1.0
+        }
+    } else if (std::abs(WP-0.40)<0.05) { 
+        if (std::abs(LepGood_pdgId) == 11) {
+            if (LepGood_pt > 20) corr = 0.80;
+            else corr = 0.80+0.20*(20.-LepGood_pt)/13.; // interpolate
+        } else {
+            if (LepGood_pt > 20) corr = 0.74;
+            else if (LepGood_pt < 10) corr = 1.0;
+            else corr = 0.74+0.026*(20.-LepGood_pt); // interpolate up from 0.74 to 1.0
+        }
+
+    } else {
+        static int warn = 0; if (++warn < 2) std::cout << "Warning: ttHl_ptFO requested for unexpected WP " << WP << std::endl; 
+    }
+    return corr * LepGood_pt/LepGood_jetPtRatio;
+}
+float ttHl_ptFO_ab(int LepGood_pdgId, float LepGood_pt, float LepGood_jetPtRatio, float LepGood_mva, float WP, float a, float b) {
+    if (LepGood_mva > WP) return LepGood_pt;
+    return std::max(LepGood_pt, a*(LepGood_pt/LepGood_jetPtRatio - b));
+}
+
+
 void fakeRate() {}
