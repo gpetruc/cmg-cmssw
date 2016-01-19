@@ -273,18 +273,22 @@ def doNormFit(pspec,pmap,mca,saveScales=False):
         hpdf = ROOT.RooHistPdf("pdf_"+p,"",ROOT.RooArgSet(x), rdhs[p])
         pdfs.add(hpdf); dontDelete.append(hpdf)
         if mca.getProcessOption(p,'FreeFloat',False):
-            syst = mca.getProcessOption(p,'NormSystematic',0.0)
-            normterm = w.factory('prod::norm_%s(%g,syst_%s[1,%g,%g])' % (p, pmap[p].Integral(), p, 0.2, 5))
+            normTermName = mca.getProcessOption(p,'PegNormToProcess',p)
+            normterm = w.factory('prod::norm_%s(%g,syst_%s[1,%g,%g])' % (p, pmap[p].Integral(), normTermName, 0.2, 5))
             dontDelete.append((normterm,))
             coeffs.add(normterm)
             procNormMap[p] = normterm
         elif mca.getProcessOption(p,'NormSystematic',0.0) > 0:
             syst = mca.getProcessOption(p,'NormSystematic',0.0)
-            normterm = w.factory('expr::norm_%s("%g*pow(%g,@0)",syst_%s[-5,5])' % (p, pmap[p].Integral(), 1+syst, p))
-            constterm = w.factory('Gaussian::systpdf_%s(syst_%s,0,1)' % (p,p))
-            dontDelete.append((normterm,constterm))
+            normTermName = mca.getProcessOption(p,'PegNormToProcess',p)
+            normterm = w.factory('expr::norm_%s("%g*pow(%g,@0)",syst_%s[-5,5])' % (p, pmap[p].Integral(), 1+syst, normTermName))
+            if not w.pdf("systpdf_%s" % normTermName): 
+                constterm = w.factory('Gaussian::systpdf_%s(syst_%s,0,1)' % (normTermName,normTermName))
+                constraints.add(constterm)
+                dontDelete.append((normterm,constterm))
+            else:
+                dontDelete.append((normterm))
             coeffs.add(normterm)
-            constraints.add(constterm)
             procNormMap[p] = normterm
         else:    
             normterm = w.factory('norm_%s[%g]' % (p, pmap[p].Integral()))
@@ -311,7 +315,8 @@ def doNormFit(pspec,pmap,mca,saveScales=False):
            newscale = procNormMap[p].getVal()/pmap[p].Integral()
            pmap[p].Scale(newscale)
            # now get the 1 sigma
-           nuis = w.var("syst_"+p);
+           normTermName = mca.getProcessOption(p,'PegNormToProcess',p)
+           nuis = w.var("syst_"+normTermName);
            val,err = (nuis.getVal(), nuis.getError())
            v0 =  procNormMap[p].getVal()
            nuis.setVal(val+err)
@@ -646,6 +651,9 @@ class PlotMaker:
                             plot.SetMarkerSize(1.5)
                         else:
                             plot.SetMarkerStyle(0)
+                if stack.GetNhists() == 0:
+                    print "ERROR: for %s, all histograms are empty\n " % pspec.name
+                    continue
                 stack.Draw("GOFF")
                 stack.GetYaxis().SetTitle(pspec.getOption('YTitle',"Events"))
                 stack.GetXaxis().SetTitle(pspec.getOption('XTitle',pspec.name))
