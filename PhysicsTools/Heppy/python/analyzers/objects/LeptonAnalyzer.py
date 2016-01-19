@@ -555,10 +555,12 @@ class LeptonAnalyzer( Analyzer ):
                 else: lep.mcMatchAny = 1
                 if not getattr(lep, 'mcLep', None): lep.mcLep = gen
             else: 
+                if not getattr(lep, 'mcLep', None): lep.mcLep = None
                 lep.mcMatchAny = 0
             # fix case where the matching with the only prompt leptons failed, but we still ended up with a prompt match
             if gen != None and hasattr(lep,'mcMatchId') and lep.mcMatchId == 0:
-                if isPromptLepton(gen, False): lep.mcMatchId = 100
+                if isPromptLepton(gen, False) or (gen.isPromptFinalState() or gen.isDirectPromptTauDecayProductFinalState()): 
+                    lep.mcMatchId = 100
             elif not hasattr(lep,'mcMatchId'):
                 lep.mcMatchId = 0
             if not hasattr(lep,'mcMatchTau'): lep.mcMatchTau = 0
