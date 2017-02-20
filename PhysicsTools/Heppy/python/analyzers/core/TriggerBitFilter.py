@@ -13,6 +13,11 @@ class TriggerBitFilter( Analyzer ):
         trigVec = ROOT.vector(ROOT.string)()
         for t in triggers: trigVec.push_back(t)
         self.mainFilter = ROOT.heppy.TriggerBitChecker(trigVec)
+        myTriggerPrescales = {}
+        if   hasattr(cfg_comp, 'myTriggerPrescales'): myTriggerPrescales = cfg_comp.myTriggerPrescales
+        elif hasattr(cfg_ana , 'myTriggerPrescales'): myTriggerPrescales =  cfg_ana.myTriggerPrescales
+        for (trig,presc) in myTriggerPrescales.iteritems():
+            self.mainFilter.myPrescaleTrigger(trig,presc)
         if len(vetoTriggers):
             vetoVec = ROOT.vector(ROOT.string)()
             for t in vetoTriggers: vetoVec.push_back(t)
