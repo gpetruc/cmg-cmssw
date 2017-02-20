@@ -25,7 +25,9 @@ TriggerBitChecker::pathStruct TriggerBitChecker::returnPathStruct(const std::str
 
 bool TriggerBitChecker::check(const edm::EventBase &event, const edm::TriggerResults &result) const {
     if (result.parameterSetID() != lastID_) { syncIndices(event, result); lastID_ = result.parameterSetID(); }
-    for (std::vector<unsigned int>::const_iterator it = indices_.begin(), ed = indices_.end(); it != ed; ++it) {
+    std::vector<unsigned int>::const_iterator itmp = myprescales_.begin();
+    for (std::vector<unsigned int>::const_iterator it = indices_.begin(), ed = indices_.end(); it != ed; ++it, ++itmp) {
+        if ((*itmp > 1) && ( (event.id().event() % (*itmp)) != 1)) continue;
         if (result.accept(*it)) return true;
     }
     return false;
@@ -62,8 +64,20 @@ void TriggerBitChecker::syncIndices(const edm::EventBase &event, const edm::Trig
     for (size_t i = 0, n = names.size(); i < n; ++i) {
         const std::string &thispath = names.triggerName(i);
         for (itp = bgp; itp != edp; ++itp) {
-            if (thispath.find(itp->pathName) == 0 && event.id().run() >= itp->first && event.id().run() <= itp->last) indices_.push_back(i);
+            if (thispath.find(itp->pathName) == 0 && event.id().run() >= itp->first && event.id().run() <= itp->last) {
+                indices_.push_back(i);
+                myprescales_.push_back(itp->myprescale);
+            }
         }
+    }
+}
+
+void TriggerBitChecker::myPrescaleTrigger(const std::string &path, unsigned int number) {
+    std::string erased_path(path);
+    std::string::size_type idx = erased_path.find("*");
+    if (idx != std::string::npos) erased_path.erase(idx);
+    for (std::vector<pathStruct>::iterator itp = paths_.begin(), edp = paths_.end(); itp != edp; ++itp) {
+        if (itp->pathName == erased_path) itp->myprescale = number;
     }
 }
 
